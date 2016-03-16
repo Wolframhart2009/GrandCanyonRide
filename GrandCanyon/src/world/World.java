@@ -13,7 +13,7 @@ import com.jme3.texture.Texture;
  * @author Graeme
  */
 public class World {
-    public static final float NORMALIZE = 255;
+    public static final float NORMALIZE = 512;
     
     private Texture hMapImage;
     
@@ -38,7 +38,7 @@ public class World {
         physWorld = new TerrainQuad("Grand_Canyon", 65, 4097, map.getHeightMap());
         physWorld.setMaterial(mapMat);
         physWorld.setLocalTranslation(0, -NORMALIZE, 0);
-        physWorld.setLocalScale(2f, 1f, 2f); //Random Scale not set in stone
+        physWorld.setLocalScale(4f, 1f, 4f); //Random Scale not set in stone
         
         TerrainLodControl control = new TerrainLodControl(physWorld, sa.getCamera());
         physWorld.addControl(control);
@@ -69,24 +69,19 @@ public class World {
         mapMat = new Material(sa.getAssetManager(), "Common/MatDefs/Terrain/HeightBasedTerrain.j3md");
         
         //Third assign our materials to the varying levels of the heightmap;
-        Texture grass = sa.getAssetManager().loadTexture("Textures/Terrain/splat/grass.jpg");
-        grass.setWrap(Texture.WrapMode.Repeat);
-        mapMat.setTexture("region1ColorMap", grass);
-        
         Texture rock = sa.getAssetManager().loadTexture("Textures/splat/sandstone.jpg");
         rock.setWrap(Texture.WrapMode.Repeat);
-        mapMat.setTexture("region2ColorMap", rock);
+        mapMat.setTexture("region1ColorMap", rock);
         
         Texture dirt = sa.getAssetManager().loadTexture("Textures/Terrain/splat/dirt.jpg");
         dirt.setWrap(Texture.WrapMode.Repeat);
-        mapMat.setTexture("region3ColorMap", dirt);
+        mapMat.setTexture("region2ColorMap", dirt);
         
-        mapMat.setVector3("region1", new Vector3f(0, 31, 32f)); //startheight, endheight, scale
-        mapMat.setVector3("region2", new Vector3f(32, 100, 32)); //startheight, endheight, scale
-        mapMat.setVector3("region3", new Vector3f(101, NORMALIZE, 32f)); //startheight, endheight, scale
+        mapMat.setVector3("region1", new Vector3f(0, 5, 32f)); //startheight, endheight, scale
+        mapMat.setVector3("region2", new Vector3f(5, NORMALIZE, 32f)); //startheight, endheight, scale
         
         mapMat.setFloat("terrainSize", 4096);
-        mapMat.setFloat("slopeTileFactor", 32f);
+        mapMat.setFloat("slopeTileFactor", 16f);
         
     }
 }
