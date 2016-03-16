@@ -13,15 +13,18 @@ import com.jme3.scene.shape.Box;
  * @author normenhansen
  */
 public class Main extends SimpleApplication {
+    
+    DisplaySettings aps;
 
     public static void main(String[] args) {
         Main app = new Main();
+        DisplaySettings.initDisplay(app);
         app.start();
     }
 
     @Override
     public void simpleInitApp() {
-
+        aps = new DisplaySettings(this);
     }
 
     @Override

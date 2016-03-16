@@ -5,6 +5,9 @@
 package mygame;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.light.DirectionalLight;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -38,6 +41,7 @@ public class DisplaySettings {
         aps.setResolution(screen.width, screen.height);
         s.setSettings(aps);
         s.setShowSettings(false);
+        s.setDisplayStatView(false);
     }
     
     public void initCam(){
@@ -45,6 +49,10 @@ public class DisplaySettings {
     }
     
     public void initLights(){
-        //Light Code goes here
+        
+        DirectionalLight sun = new DirectionalLight();
+        sun.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
+        sun.setColor(ColorRGBA.White);
+        sa.getRootNode().addLight(sun);
     }
 }
