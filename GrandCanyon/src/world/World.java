@@ -23,19 +23,19 @@ public class World {
     
     private SimpleApplication sa;
     
-    public World(SimpleApplication sa){
+    public World(SimpleApplication sa, String path, int size){
         this.sa = sa;
         
-        initMapTextures();
+        initMapTextures(path);
         initMap(NORMALIZE);
-        initWorld();
+        initWorld(size);
     }
     
     /*
      * 
      */
-    private void initWorld(){
-        physWorld = new TerrainQuad("Grand_Canyon", 65, 4097, map.getHeightMap());
+    private void initWorld(int s){
+        physWorld = new TerrainQuad("Image_Terrain", 65, s, map.getHeightMap());
         physWorld.setMaterial(mapMat);
         physWorld.setLocalTranslation(0, -NORMALIZE, 0);
         physWorld.setLocalScale(4f, 1f, 4f); //Random Scale not set in stone
@@ -61,9 +61,9 @@ public class World {
      * Load all of the textures we will be using including the grayscale
      * heightmap and the ground textures.
     */  
-    private void initMapTextures(){
+    private void initMapTextures(String path){
         //First load the Height Map Image
-        hMapImage = sa.getAssetManager().loadTexture("Scenes/Grand_Canyon.jpg");
+        hMapImage = sa.getAssetManager().loadTexture(path);
         
         //Second init the material framework
         mapMat = new Material(sa.getAssetManager(), "Common/MatDefs/Terrain/HeightBasedTerrain.j3md");
