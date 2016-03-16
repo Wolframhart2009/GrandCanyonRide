@@ -47,7 +47,7 @@ public class DisplaySettings {
     
     public void initCam(){
         Camera cam = sa.getCamera();
-        sa.getFlyByCamera().setMoveSpeed(10.0f);
+        sa.getFlyByCamera().setMoveSpeed(50.0f);
         cam.setLocation(new Vector3f(300f, 300f, 300f));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
