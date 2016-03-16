@@ -25,10 +25,8 @@ public class Sky {
         initSky(path, isSphere);
     }
     
-    private void initSky(String path, boolean skySphere){
-        Texture sky = sa.getAssetManager().loadTexture(path);
-        
-        skyBox = SkyFactory.createSky(sa.getAssetManager(), sky, skySphere);
+    private void initSky(String path, boolean skySphere){        
+        skyBox = SkyFactory.createSky(sa.getAssetManager(), path, skySphere);
         
         sa.getRootNode().attachChild(skyBox);
     }

@@ -21,6 +21,8 @@ public class DisplaySettings {
     public static int screenX;
     public static int screenY;
     
+    public DirectionalLight mainLight;
+    
     SimpleApplication  sa;
     
     public DisplaySettings(SimpleApplication sa){
@@ -54,9 +56,9 @@ public class DisplaySettings {
     
     public void initLights(){
         
-        DirectionalLight sun = new DirectionalLight();
-        sun.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
-        sun.setColor(ColorRGBA.White);
-        sa.getRootNode().addLight(sun);
+        mainLight = new DirectionalLight();
+        mainLight.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
+        mainLight.setColor(ColorRGBA.White);
+        sa.getRootNode().addLight(mainLight);
     }
 }
