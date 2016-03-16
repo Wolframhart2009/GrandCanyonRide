@@ -73,7 +73,7 @@ public class World {
         grass.setWrap(Texture.WrapMode.Repeat);
         mapMat.setTexture("region1ColorMap", grass);
         
-        Texture rock = sa.getAssetManager().loadTexture("Textures/Terrain/splat/road.jpg");
+        Texture rock = sa.getAssetManager().loadTexture("Textures/splat/sandstone.jpg");
         rock.setWrap(Texture.WrapMode.Repeat);
         mapMat.setTexture("region2ColorMap", rock);
         
