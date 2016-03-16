@@ -8,6 +8,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.Camera;
 import com.jme3.system.AppSettings;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -45,7 +46,10 @@ public class DisplaySettings {
     }
     
     public void initCam(){
-        //Cam code goes here
+        Camera cam = sa.getCamera();
+        sa.getFlyByCamera().setMoveSpeed(10.0f);
+        cam.setLocation(new Vector3f(300f, 300f, 300f));
+        cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
     
     public void initLights(){

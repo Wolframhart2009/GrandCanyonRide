@@ -1,20 +1,18 @@
 package mygame;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
+import world.World;
 
 /**
- * test
- * @author normenhansen
+ * 
+ * @author Graeme
  */
 public class Main extends SimpleApplication {
     
     DisplaySettings aps;
+    
+    World w;
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -25,6 +23,8 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         aps = new DisplaySettings(this);
+        
+        w = new World(this);
     }
 
     @Override
