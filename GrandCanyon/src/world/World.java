@@ -3,6 +3,7 @@ package world;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.terrain.geomipmap.TerrainLodControl;
 import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
@@ -14,10 +15,13 @@ import com.jme3.texture.Texture;
  */
 public class World {
     public static final float NORMALIZE = 512;
+    public static final int PATCH_SIZE = 65;
     
     private Texture hMapImage;
     
-    TerrainQuad physWorld;
+    public int size;
+    
+    private TerrainQuad physWorld;
     private AbstractHeightMap map;
     private Material mapMat;
     
@@ -25,6 +29,7 @@ public class World {
     
     public World(SimpleApplication sa, String path, int size){
         this.sa = sa;
+        
         
         initMapTextures(path);
         initMap(NORMALIZE);
@@ -35,10 +40,13 @@ public class World {
      * 
      */
     private void initWorld(int s){
-        physWorld = new TerrainQuad("Image_Terrain", 65, s, map.getHeightMap());
+        physWorld = new TerrainQuad("Image_Terrain", PATCH_SIZE, s, map.getHeightMap());
         physWorld.setMaterial(mapMat);
         physWorld.setLocalTranslation(0, -NORMALIZE, 0);
         physWorld.setLocalScale(4f, 1f, 4f); //Random Scale not set in stone
+        
+        physWorld.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+
         
         TerrainLodControl control = new TerrainLodControl(physWorld, sa.getCamera());
         physWorld.addControl(control);
