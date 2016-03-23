@@ -10,7 +10,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Sphere;
+import com.jme3.scene.shape.Box;
 
 /**
  *
@@ -38,7 +38,7 @@ public class Raft {
         matRaft.setFloat("Shininess", 10f); // shininess from 1-128
 //        matRaft.setTexture("DiffuseMap", msa.getAssetManager().loadTexture("Textures/textureMarble.png"));
         
-        Sphere s = new Sphere(32, 32, 5f);
+        Box s = new Box(16, 2, 12f);
         geomRaft = new Geometry("raft", s);
         geomRaft.setMaterial(matRaft);
         geomRaft.setLocalTranslation(new Vector3f(0f, 0f, 0f));

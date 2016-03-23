@@ -25,7 +25,7 @@ public class DisplaySettings {
     public static int screenX;
     public static int screenY;
     
-    public DirectionalLight mainLight;
+    private DirectionalLight mainLight;
     
     SimpleApplication  sa;
     
@@ -59,12 +59,16 @@ public class DisplaySettings {
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
     
-    public void initLights(){
+    private void initLights(){
         
         mainLight = new DirectionalLight();
         mainLight.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
         mainLight.setColor(ColorRGBA.White);
         sa.getRootNode().addLight(mainLight);
+    }
+    
+    public DirectionalLight getMainLight(){
+        return mainLight;
     }
     
     private void initCoordCross() {

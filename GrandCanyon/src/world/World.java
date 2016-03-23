@@ -23,11 +23,13 @@ import mygame.Main;
 public class World {
     public static final float NORMALIZE = 512;
     public static final int PATCH_SIZE = 65;
+    public static final float INIT_WATER_HEIGHT = -(World.NORMALIZE)  + 150;
     
     private Texture hMapImage;
     
     public int size;
     
+    private float waterHeight;
     private TerrainQuad physWorld;
     private AbstractHeightMap map;
     private Material mapMat;
@@ -36,6 +38,7 @@ public class World {
     
     public World(Main m, String path, int size){
         msa = m;
+        this.waterHeight = INIT_WATER_HEIGHT;
         
         initMapTextures(path);
         initMap(NORMALIZE);
@@ -108,5 +111,13 @@ public class World {
         RigidBodyControl terrainPhys = new RigidBodyControl(0f);
         physWorld.addControl(terrainPhys);
         msa.bullet.getPhysicsSpace().add(terrainPhys);
+    }
+    
+    public float getWaterHeight(){
+        return this.waterHeight;
+    }
+    
+    public void setWaterHeight(float w){
+        this.waterHeight = w;
     }
 }

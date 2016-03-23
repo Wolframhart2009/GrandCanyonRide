@@ -38,7 +38,7 @@ public class Main extends SimpleApplication {
         w = new World(this, "Scenes/Grand_Canyon.jpg", 4097);
 
         s = new Sky(this, "Textures/Sky/Bright/BrightSky.dds", false);
-        water = new Water(this, w);
+        water = new Water(this, w, aps.getMainLight());
         
         raft = new Raft(this);
     }
