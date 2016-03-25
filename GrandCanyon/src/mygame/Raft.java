@@ -102,11 +102,13 @@ public class Raft {
         
         @Override
         protected void controlUpdate(float tpf) {
-            impulseDir = new Vector3f(xOffset, 0f, zOffset);
-            impulseDir = impulseDir.mult(speed);
-            physRaft.applyImpulse(impulseDir, Vector3f.ZERO);
-            xOffset = 0;
-            zOffset = 0;
+            if(xOffset != 0 || zOffset != 0) {
+                impulseDir = new Vector3f(xOffset, 0f, zOffset);
+                impulseDir = impulseDir.mult(speed);
+                physRaft.applyImpulse(impulseDir, Vector3f.ZERO);
+                xOffset = 0;
+                zOffset = 0;
+            }
         }
 
         @Override
