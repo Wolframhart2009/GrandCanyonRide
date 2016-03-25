@@ -16,6 +16,7 @@ import com.jme3.scene.shape.Line;
 import com.jme3.system.AppSettings;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import world.World;
 
 /**
  *
@@ -29,11 +30,11 @@ public class DisplaySettings {
     
     SimpleApplication  sa;
     
-    public DisplaySettings(SimpleApplication sa){
+    public DisplaySettings(SimpleApplication sa, World w){
         this.sa = sa;
         
         initLights();
-        initCam();
+        initFlyCam(w);
         initCoordCross();
     }
 
@@ -52,11 +53,11 @@ public class DisplaySettings {
         s.setDisplayStatView(false);
     }
     
-    public void initCam(){
+    public void initFlyCam(World w){
         Camera cam = sa.getCamera();
         sa.getFlyByCamera().setMoveSpeed(50.0f);
-        cam.setLocation(new Vector3f(0f, 0f, 0f));
-        cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
+        cam.setLocation(new Vector3f(5f, w.getWaterHeight() + 5f, 5f));
+        cam.lookAt(new Vector3f(0f, w.getWaterHeight() + 1f, 20f), Vector3f.UNIT_Y);
     }
     
     private void initLights(){

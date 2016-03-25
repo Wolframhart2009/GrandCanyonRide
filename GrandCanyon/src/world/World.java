@@ -38,6 +38,7 @@ public class World {
     
     public World(Main m, String path, int size){
         msa = m;
+        this.size = size;
         this.waterHeight = INIT_WATER_HEIGHT;
         
         initMapTextures(path);

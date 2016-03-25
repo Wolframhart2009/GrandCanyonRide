@@ -5,9 +5,12 @@
 package world;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Plane;
 import com.jme3.math.Quaternion;
@@ -41,7 +44,7 @@ public class Water {
     
     public Water(Main m, World w, DirectionalLight l){
     
-        this.msa = m;
+        msa = m;
         this.light = l;
         
         initWater(w);
@@ -82,17 +85,18 @@ public class Water {
     }
     
     private void addWaterCollision(World w){
-       Box WaterCollideMesh = new Box(w.size, 1.0f, w.size);
-       waterNode = new Geometry("Water_Collide_box", WaterCollideMesh);
-       waterNode.setMaterial(new Material(msa.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md"));
+        Box WaterCollideMesh = new Box(w.size, 1.0f, w.size);
+        waterNode = new Geometry("Water_Collide_box", WaterCollideMesh);
+        waterNode.setMaterial(new Material(msa.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md"));
        
-       msa.getRootNode().attachChild(waterNode);
-       waterNode.setLocalTranslation(0, w.getWaterHeight(), 0);
-       waterNode.setCullHint(Spatial.CullHint.Always); //This makes it invisible
+        msa.getRootNode().attachChild(waterNode);
+        waterNode.setLocalTranslation(0, w.getWaterHeight(), 0);
+        waterNode.setCullHint(Spatial.CullHint.Always); //This makes it invisible
     }
     
     private void initPhysics() {
-        RigidBodyControl waterPhys = new RigidBodyControl(0f);
+        BoxCollisionShape waterShape = (BoxCollisionShape) CollisionShapeFactory.createBoxShape(waterNode);
+        RigidBodyControl waterPhys = new RigidBodyControl(waterShape, 0f);
         waterNode.addControl(waterPhys);
         msa.bullet.getPhysicsSpace().add(waterPhys);
     }

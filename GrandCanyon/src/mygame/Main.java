@@ -15,13 +15,13 @@ import world.World;
 public class Main extends SimpleApplication {
     
     DisplaySettings aps;
-    
     World w;
     Sky s;
     Water water;
     Raft raft;
     
     public BulletAppState bullet;
+    public static final float RESTITUTION = 0.5f;
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -31,16 +31,15 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        aps = new DisplaySettings(this);
-        
         initPhysics();
         
         w = new World(this, "Scenes/Grand_Canyon.jpg", 4097);
-
+        raft = new Raft(this, w);
+        
+        aps = new DisplaySettings(this, w);
+        
         s = new Sky(this, "Textures/Sky/Bright/BrightSky.dds", false);
         water = new Water(this, w, aps.getMainLight());
-        
-        raft = new Raft(this);
     }
 
     @Override
