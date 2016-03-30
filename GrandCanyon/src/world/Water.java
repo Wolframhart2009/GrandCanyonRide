@@ -58,20 +58,6 @@ public class Water {
 
          fpp.addFilter(watFilter);
          
-         BloomFilter bloom = new BloomFilter();
-         bloom.setExposurePower(55);
-         bloom.setBloomIntensity(1.0f);
-         fpp.addFilter(bloom);
-        
-         LightScatteringFilter lsf = new LightScatteringFilter(light.getDirection().mult(-300));
-         lsf.setLightDensity(1.0f);
-         fpp.addFilter(lsf);
-        
-         DepthOfFieldFilter dof = new DepthOfFieldFilter();
-         dof.setFocusDistance(0);
-         dof.setFocusRange(100);
-         fpp.addFilter(dof);
-         
          watFilter.setWaveScale(0.003f);
          watFilter.setMaxAmplitude(2f);
          watFilter.setFoamExistence(new Vector3f(1f, 4, 0.5f));

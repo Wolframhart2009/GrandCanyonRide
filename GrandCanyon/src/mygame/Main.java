@@ -38,8 +38,8 @@ public class Main extends SimpleApplication {
         
         aps = new DisplaySettings(this, w);
         
-        s = new Sky(this, "Textures/Sky/Bright/BrightSky.dds", false);
-        water = new Water(this, w, aps.getMainLight());
+        s = new Sky(this, "Textures/Sky/Bright/BrightSky.dds", false, aps.getMainLight());
+        water = new Water(this, w,  aps.getMainLight());
     }
 
     @Override
