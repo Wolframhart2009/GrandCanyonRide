@@ -56,6 +56,7 @@ public class Water {
         initWater();
         addWaterCollision(w);
         initPhysics();
+        waterNode.addControl(new WaterControl());
     }
     
     private void initWater(){
@@ -95,10 +96,10 @@ public class Water {
     }
     
     public void updateWaterHeight(){
-        System.out.print("Old height: " + waterPhys.getPhysicsLocation() + " || new Height: " + waterPhys.getPhysicsLocation().addLocal(
-                0,
-                (world.getWaterHeight() - waterPhys.getPhysicsLocation().y),
-                0) + "\n");
+//        System.out.print("Old height: " + waterPhys.getPhysicsLocation() + " || new Height: " + waterPhys.getPhysicsLocation().addLocal(
+//                0,
+//                (world.getWaterHeight() - waterPhys.getPhysicsLocation().y),
+//                0) + "\n");
         
         watFilter.setWaterHeight(world.getWaterHeight());
         waterPhys.setPhysicsLocation(waterPhys.getPhysicsLocation().addLocal(
@@ -108,13 +109,20 @@ public class Water {
     }
     
     class WaterControl extends AbstractControl{
+        
+        private float time;
+        
         public WaterControl(){
             
         }
 
         @Override
         protected void controlUpdate(float tpf) {
-
+              //Generates minor waves
+            
+              time += tpf;
+              float waveHeight = (float) Math.cos(((time * 0.025f) % FastMath.TWO_PI));
+              watFilter.setWaterHeight(world.getWaterHeight() + waveHeight);
         }
 
         @Override

@@ -45,7 +45,9 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        //w.setWaterHeight(tpf, 190);
+        if(!(tpf > 1.0)){
+            //w.setWaterHeight(tpf, -350);
+        }
     }
 
     @Override
