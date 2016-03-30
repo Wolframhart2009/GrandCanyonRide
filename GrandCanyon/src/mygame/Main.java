@@ -34,17 +34,18 @@ public class Main extends SimpleApplication {
         initPhysics();
         
         w = new World(this, "Scenes/Grand_Canyon.jpg", 4097);
-        raft = new Raft(this, w);
         
         aps = new DisplaySettings(this, w);
         
         s = new Sky(this, "Textures/Sky/Bright/BrightSky.dds", false, aps.getMainLight());
         water = new Water(this, w,  aps.getMainLight());
+        w.attachWater(water);
+        raft = new Raft(this, w);
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-        
+        //w.setWaterHeight(tpf, 190);
     }
 
     @Override

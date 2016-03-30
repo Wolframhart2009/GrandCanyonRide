@@ -20,9 +20,12 @@ import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.post.filters.DepthOfFieldFilter;
 import com.jme3.post.filters.LightScatteringFilter;
+import com.jme3.renderer.RenderManager;
+import com.jme3.renderer.ViewPort;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture2D;
@@ -38,21 +41,24 @@ public class Water {
     
     public Spatial waterNode;
     private WaterFilter watFilter;
+    private RigidBodyControl waterPhys;
     
     private Main msa;
     private DirectionalLight light;
+    private World world;
     
     public Water(Main m, World w, DirectionalLight l){
     
-        msa = m;
+        this.msa = m;
         this.light = l;
+        this.world = w;
         
-        initWater(w);
+        initWater();
         addWaterCollision(w);
         initPhysics();
     }
     
-    private void initWater(World w){
+    private void initWater(){
          watFilter = new WaterFilter(msa.getRootNode(), light.getDirection());
          FilterPostProcessor fpp = new FilterPostProcessor(msa.getAssetManager());
 
@@ -65,7 +71,7 @@ public class Water {
 
          watFilter.setRefractionStrength(0.2f);
 
-         watFilter.setWaterHeight(w.getWaterHeight());
+         watFilter.setWaterHeight(world.getWaterHeight());
          
          msa.getViewPort().addProcessor(fpp);
     }
@@ -82,8 +88,38 @@ public class Water {
     
     private void initPhysics() {
         BoxCollisionShape waterShape = (BoxCollisionShape) CollisionShapeFactory.createBoxShape(waterNode);
-        RigidBodyControl waterPhys = new RigidBodyControl(waterShape, 0f);
+        waterPhys = new RigidBodyControl(waterShape, 0f);
+        waterPhys.setRestitution(0.0f);
         waterNode.addControl(waterPhys);
         msa.bullet.getPhysicsSpace().add(waterPhys);
+    }
+    
+    public void updateWaterHeight(){
+        System.out.print("Old height: " + waterPhys.getPhysicsLocation() + " || new Height: " + waterPhys.getPhysicsLocation().addLocal(
+                0,
+                (world.getWaterHeight() - waterPhys.getPhysicsLocation().y),
+                0) + "\n");
+        
+        watFilter.setWaterHeight(world.getWaterHeight());
+        waterPhys.setPhysicsLocation(waterPhys.getPhysicsLocation().addLocal(
+                0,
+                (world.getWaterHeight() - waterPhys.getPhysicsLocation().y),
+                0));
+    }
+    
+    class WaterControl extends AbstractControl{
+        public WaterControl(){
+            
+        }
+
+        @Override
+        protected void controlUpdate(float tpf) {
+
+        }
+
+        @Override
+        protected void controlRender(RenderManager rm, ViewPort vp) {
+            
+        }
     }
 }

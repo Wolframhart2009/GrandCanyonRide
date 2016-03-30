@@ -7,6 +7,7 @@ import com.jme3.bullet.collision.shapes.MeshCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.material.Material;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Node;
@@ -24,15 +25,18 @@ public class World {
     public static final float NORMALIZE = 512;
     public static final int PATCH_SIZE = 65;
     public static final float INIT_WATER_HEIGHT = -(World.NORMALIZE)  + 150;
+    public static final float TOLEARANCE = .05f;
     
     private Texture hMapImage;
     
     public int size;
     
     private float waterHeight;
+    private Water water;
     private TerrainQuad physWorld;
     private AbstractHeightMap map;
     private Material mapMat;
+    
     
     private Main msa;
     
@@ -114,11 +118,39 @@ public class World {
         msa.bullet.getPhysicsSpace().add(terrainPhys);
     }
     
+    public void attachWater(Water w){
+        this.water = w;
+    }
+    
     public float getWaterHeight(){
         return this.waterHeight;
     }
     
-    public void setWaterHeight(float w){
-        this.waterHeight = w;
+    public void setWaterHeight(float value){
+        //For creating a fast update to a given value
+        this.waterHeight = value;
+        if(this.water != null){
+            water.updateWaterHeight();
+        }
+    }
+    
+    public void setWaterHeight(float tpf, float target){
+        //For creating a slow update to target. Pass tpf.
+        
+        //System.out.printf("This is tolerance check value to see if we should move: %f\n", FastMath.abs(this.waterHeight - target));
+        //System.out.printf("Old height: %f || New Height: %f || target: %f\n", this.waterHeight, this.waterHeight + tpf, target);
+        
+        if(!(FastMath.abs(this.waterHeight - target) <= TOLEARANCE)){
+            if(target > this.waterHeight){
+                this.waterHeight = this.waterHeight + tpf;
+            }
+            else{
+                this.waterHeight = this.waterHeight - tpf;
+            }
+
+            if(this.water != null){
+                water.updateWaterHeight();
+            }
+        }
     }
 }

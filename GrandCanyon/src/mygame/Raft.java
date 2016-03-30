@@ -66,6 +66,7 @@ public class Raft {
         
         RaftControl raftControl = new RaftControl();
         geomRaft.addControl(raftControl);
+        System.out.println("Raft added at location: " + geomRaft.getLocalTranslation());
     }
     
     private void initKeys() {
