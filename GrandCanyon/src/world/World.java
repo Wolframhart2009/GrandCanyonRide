@@ -6,11 +6,13 @@ import com.jme3.bullet.collision.shapes.HeightfieldCollisionShape;
 import com.jme3.bullet.collision.shapes.MeshCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
+import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Node;
+import com.jme3.shadow.DirectionalLightShadowRenderer;
 import com.jme3.terrain.geomipmap.TerrainLodControl;
 import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
@@ -116,6 +118,12 @@ public class World {
         RigidBodyControl terrainPhys = new RigidBodyControl(0f);
         physWorld.addControl(terrainPhys);
         msa.bullet.getPhysicsSpace().add(terrainPhys);
+    }
+    
+    public void addShadows(DirectionalLight light){
+        DirectionalLightShadowRenderer shadow_render = new DirectionalLightShadowRenderer(msa.getAssetManager(), 1024, 4);
+        shadow_render.setLight(light);
+        msa.getViewPort().addProcessor(shadow_render);
     }
     
     public void attachWater(Water w){

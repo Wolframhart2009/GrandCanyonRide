@@ -36,6 +36,7 @@ public class Main extends SimpleApplication {
         w = new World(this, "Scenes/Grand_Canyon.jpg", 4097);
         
         aps = new DisplaySettings(this, w);
+        w.addShadows(aps.getMainLight());
         
         s = new Sky(this, "Textures/Sky/Bright/BrightSky.dds", false, aps.getMainLight());
         water = new Water(this, w,  aps.getMainLight());
