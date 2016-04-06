@@ -4,6 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
+import obstacles.Rapids;
 import world.Sky;
 import world.Water;
 import world.World;
@@ -19,6 +20,8 @@ public class Main extends SimpleApplication {
     Sky s;
     Water water;
     Raft raft;
+    
+            boolean addedRapid = false;
     
     public BulletAppState bullet;
     public static final float RESTITUTION = 0.5f;
@@ -46,8 +49,10 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        if(!(tpf > 1.0)){
+        if(!(tpf > 1.0) && addedRapid == false){
             //w.setWaterHeight(tpf, -350);
+            new Rapids(this, w, new Vector3f(0, -360, 20));
+            addedRapid = true;
         }
     }
 
