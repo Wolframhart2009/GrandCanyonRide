@@ -78,7 +78,7 @@ public class Water {
     }
     
     private void addWaterCollision(World w){
-        Box WaterCollideMesh = new Box(w.size, 1.0f, w.size);
+        Box WaterCollideMesh = new Box(w.size, .30f, w.size);
         waterNode = new Geometry("Water_Collide_box", WaterCollideMesh);
         waterNode.setMaterial(new Material(msa.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md"));
        
@@ -121,9 +121,9 @@ public class Water {
               //Generates minor waves
             
               time += tpf;
-              float waveHeight = (float) Math.cos(((time * 0.025f) % FastMath.TWO_PI));
+              float waveHeight = (float) Math.cos((time) % FastMath.TWO_PI)/4;
               watFilter.setWaterHeight(world.getWaterHeight() + waveHeight);
-              //System.out.println(world.getWaterHeight() + waveHeight);
+              System.out.println(world.getWaterHeight() + waveHeight);
         }
 
         @Override
