@@ -4,6 +4,8 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
+import obstacles.FallingRock;
+import obstacles.FloatingLog;
 import obstacles.Rapids;
 import world.Sky;
 import world.Water;
@@ -20,8 +22,14 @@ public class Main extends SimpleApplication {
     Sky s;
     Water water;
     Raft raft;
+
+    private FallingRock rocks[];
+    private FloatingLog logs[];
     
-            boolean addedRapid = false;
+    private static int NUM_ROCKS = 1;
+    private static int NUM_LOGS = 1;
+    
+    boolean addedRapid = false;
     
     public BulletAppState bullet;
     public static final float RESTITUTION = 0.5f;
@@ -45,6 +53,9 @@ public class Main extends SimpleApplication {
         water = new Water(this, w,  aps.getMainLight());
         w.attachWater(water);
         raft = new Raft(this, w);
+        
+        initFallingRocks();
+        initFloatingLogs();
     }
 
     @Override
@@ -65,5 +76,21 @@ public class Main extends SimpleApplication {
         bullet = new BulletAppState();
         stateManager.attach(bullet);
         bullet.setDebugEnabled(true);
+    }
+    
+    private void initFallingRocks() {
+        rocks = new FallingRock[NUM_ROCKS];
+        
+        for(int i = 0; i < NUM_ROCKS; i++) {
+            rocks[i] = new FallingRock(this, w);
+        }
+    }
+    
+    private void initFloatingLogs() {
+        logs = new FloatingLog[NUM_LOGS];
+        
+        for(int i = 0; i < NUM_LOGS; i++) {
+            logs[i] = new FloatingLog(this, w);
+        }
     }
 }
