@@ -123,6 +123,7 @@ public class Water {
               time += tpf;
               float waveHeight = (float) Math.cos(((time * 0.025f) % FastMath.TWO_PI));
               watFilter.setWaterHeight(world.getWaterHeight() + waveHeight);
+              //System.out.println(world.getWaterHeight() + waveHeight);
         }
 
         @Override
