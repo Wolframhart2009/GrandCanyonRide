@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mygame;
+package raft;
 
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
@@ -18,6 +18,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.shape.Box;
+import mygame.Main;
 import world.World;
 
 /**

@@ -1,5 +1,6 @@
 package mygame;
 
+import raft.Raft;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
