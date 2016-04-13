@@ -33,7 +33,7 @@ public class Rapids extends Node{
         initGeom();
         initEmitters();
         this.setLocalTranslation(location);
-        System.out.println("Rapid added at: " + location);
+        //System.out.println("Rapid added at: " + location);
     }
     
     private void initGeom(){
@@ -43,7 +43,7 @@ public class Rapids extends Node{
         
         sa.getRootNode().attachChild(this);
         rapidGeom.setLocalTranslation(0, 0, 0);
-        //rapidGeom.setCullHint(Spatial.CullHint.Always); //This makes it invisible
+        rapidGeom.setCullHint(Spatial.CullHint.Always); //This makes it invisible
     }
     
     private void initEmitters(){

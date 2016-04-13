@@ -51,8 +51,8 @@ public class Main extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         if((tpf < 1.0) && addedRapid == false){
             //w.setWaterHeight(tpf, -350);
-            new Rapids(this, w, new Vector3f(0, -350, 20));
-            addedRapid = true;
+            //new Rapids(this, w, new Vector3f(0, -350, 20));
+            //addedRapid = true;
         }
     }
 
