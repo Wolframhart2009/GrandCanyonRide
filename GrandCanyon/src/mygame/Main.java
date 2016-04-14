@@ -8,6 +8,7 @@ import obstacles.FallingRock;
 import obstacles.FloatingLog;
 import obstacles.Rapids;
 import raft.Raft;
+import world.Course;
 import world.Sky;
 import world.Water;
 import world.World;
@@ -23,7 +24,8 @@ public class Main extends SimpleApplication {
     Sky s;
     Water water;
     Raft raft;
-
+    Course course;
+    
     private FallingRock rocks[];
     private FloatingLog logs[];
     
@@ -58,6 +60,7 @@ public class Main extends SimpleApplication {
         w.attachWater(water);
         raft = new Raft(this, w);
         
+        initCourse();
         initFallingRocks();
         initFloatingLogs();
     }
@@ -79,7 +82,11 @@ public class Main extends SimpleApplication {
     private void initPhysics() {
         bullet = new BulletAppState();
         stateManager.attach(bullet);
-//        bullet.setDebugEnabled(true);
+        bullet.setDebugEnabled(true);
+    }
+    
+    private void initCourse() {
+        course = new Course(this, w);
     }
     
     private void initFallingRocks() {

@@ -112,6 +112,8 @@ public class Raft {
         
         @Override
         protected void controlUpdate(float tpf) {
+//            Vector3f pos = nodeRaft.getWorldTranslation();
+//            System.out.println("raft position: " + pos.x + ", " + pos.z);
             if(xOffset != 0 || zOffset != 0) {
                 impulseDir = new Vector3f(xOffset, 0f, zOffset);
                 impulseDir = impulseDir.mult(speed);
