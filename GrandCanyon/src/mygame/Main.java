@@ -21,7 +21,7 @@ public class Main extends SimpleApplication {
     Water water;
     Raft raft;
     
-            boolean addedRapid = false;
+    boolean addedRapid = false;
     
     public BulletAppState bullet;
     public static final float RESTITUTION = 0.5f;
@@ -34,6 +34,9 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        
+//        MainMenu menu = new MainMenu();
+//        stateManager.attach(menu);
         initPhysics();
         
         w = new World(this, "Scenes/Grand_Canyon.jpg", 4097);
