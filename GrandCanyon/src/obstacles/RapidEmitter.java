@@ -16,16 +16,16 @@ import com.jme3.scene.Node;
  *
  * @author Graeme
  */
-public class RapidEmitter extends ParticleEmitter{
-    
-    Node parent;
+public class RapidEmitter extends ParticleEmitter{    
     SimpleApplication sa;
     
-    public RapidEmitter(SimpleApplication s, Node parent){
+    Node parNode;
+    
+    public RapidEmitter(SimpleApplication s, Node p){
         super("Rapid_Spray_Emitter", ParticleMesh.Type.Triangle, 30);
         
         this.sa = s;
-        this.parent = parent;
+        this.parNode = p;
         
         initGraphics();
         addToScene();
@@ -42,11 +42,11 @@ public class RapidEmitter extends ParticleEmitter{
         this.setEndColor( new ColorRGBA(0f, 0f, 1f, 1f));   // Blue to
         this.setStartColor(new ColorRGBA(1f, 1f, 1f, 0.5f)); // White
         
-        this.getParticleInfluencer().setInitialVelocity(new Vector3f(0,2,0));
+        this.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 3,0));
         
         this.setStartSize(1.5f);
         this.setEndSize(0.1f);
-        this.setGravity(0,-1,0);
+        this.setGravity(0,1,0);
         
         this.setParticlesPerSec(5.0f);
         this.setLowLife(0.5f);
@@ -55,6 +55,6 @@ public class RapidEmitter extends ParticleEmitter{
     }
     
     private void addToScene(){
-        parent.attachChild(this);
+        parNode.attachChild(this);
     }
 }

@@ -1,6 +1,5 @@
 package mygame;
 
-import raft.Raft;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.Vector3f;
@@ -8,6 +7,7 @@ import com.jme3.renderer.RenderManager;
 import obstacles.FallingRock;
 import obstacles.FloatingLog;
 import obstacles.Rapids;
+import raft.Raft;
 import world.Sky;
 import world.Water;
 import world.World;
@@ -29,7 +29,7 @@ public class Main extends SimpleApplication {
     
     private static final int NUM_ROCKS = 1;
     private static final int NUM_LOGS = 1;
-    
+
     boolean addedRapid = false;
     
     public BulletAppState bullet;
@@ -43,6 +43,9 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        
+//        MainMenu menu = new MainMenu();
+//        stateManager.attach(menu);
         initPhysics();
         
         w = new World(this, "Scenes/Grand_Canyon.jpg", 4097);
@@ -61,10 +64,10 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        if(!(tpf > 1.0) && addedRapid == false){
+        if((tpf < 1.0) && addedRapid == false){
             //w.setWaterHeight(tpf, -350);
-            new Rapids(this, w, new Vector3f(0, -360, 20));
-            addedRapid = true;
+            //new Rapids(this, w, new Vector3f(0, -350, 20));
+            //addedRapid = true;
         }
     }
 
