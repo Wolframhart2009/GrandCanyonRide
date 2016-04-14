@@ -18,6 +18,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Cylinder;
 import mygame.Main;
 import world.World;
 
@@ -29,11 +30,12 @@ public class Raft {
     private Main msa;
     private Material matRaft;
     private Node nodeRaft;
-    private Geometry geomRaft;
+    private Geometry[] geoms; // holds a geometry for each log in the raft
     private RigidBodyControl physRaft;
-    float xOffset, zOffset;
+    private float xOffset, zOffset;
     
     private static final float OFFSETSPEED = 2f;
+    private static final int NUM_LOGS_IN_RAFT = 5;
     
     public Raft(Main m, World w) {
         msa = m;
@@ -46,28 +48,33 @@ public class Raft {
     }
     
     private void initRaft(World w) {
+        Vector3f startPos = new Vector3f(0f, w.getWaterHeight() + 3f, 20f);
+        geoms = new Geometry[NUM_LOGS_IN_RAFT];
+        
         nodeRaft = new Node();
+        nodeRaft.setLocalTranslation(startPos);
         
         matRaft = new Material(msa.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
-        matRaft.setBoolean("UseMaterialColors", true);
-        matRaft.setColor("Ambient", new ColorRGBA(0.5f, 0.5f, 0.5f, 1.0f));
-        matRaft.setColor("Diffuse", new ColorRGBA(0.9f, 0.9f, 0.9f, 1.0f));
-        matRaft.setColor("Specular", ColorRGBA.White);
-        matRaft.setFloat("Shininess", 10f);
+        matRaft.setTexture("DiffuseMap", msa.getAssetManager().loadTexture("Textures/log1.jpg"));
         
-        Box b = new Box(5,1,5);
-        geomRaft = new Geometry("raft", b);
-        geomRaft.setMaterial(matRaft);
-        geomRaft.setLocalTranslation(new Vector3f(0f, w.getWaterHeight() + 3f, 20f));
-        geomRaft.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
-
-        nodeRaft.attachChild(geomRaft);
+        Cylinder log = new Cylinder(32,32,1,10, true);
+        
+        for(int i = 0; i < NUM_LOGS_IN_RAFT; i++) {
+            geoms[i] = new Geometry("log" + i, log);
+            geoms[i].setMaterial(matRaft);
+            geoms[i].setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+            geoms[i].setLocalTranslation(-2.5f + (1.25f * i), 0f, 0f);
+        }
+        
+        for(Geometry geom : geoms) {
+            nodeRaft.attachChild(geom);
+        }
         
         msa.getRootNode().attachChild(nodeRaft);
         
         RaftControl raftControl = new RaftControl();
-        geomRaft.addControl(raftControl);
-        System.out.println("Raft added at location: " + geomRaft.getLocalTranslation());
+        nodeRaft.addControl(raftControl);
+        System.out.println("Raft added at location: " + nodeRaft.getLocalTranslation());
     }
     
     private void initKeys() {
@@ -80,7 +87,8 @@ public class Raft {
     
     private void initPhysics() {
         physRaft = new RigidBodyControl(2f);
-        geomRaft.addControl(physRaft);
+        nodeRaft.addControl(physRaft);
+        physRaft.setFriction(0f);
         msa.bullet.getPhysicsSpace().add(physRaft);
     }
     

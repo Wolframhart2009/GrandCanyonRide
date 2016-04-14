@@ -27,8 +27,8 @@ public class Main extends SimpleApplication {
     private FallingRock rocks[];
     private FloatingLog logs[];
     
-    private static int NUM_ROCKS = 1;
-    private static int NUM_LOGS = 1;
+    private static final int NUM_ROCKS = 1;
+    private static final int NUM_LOGS = 1;
     
     boolean addedRapid = false;
     
@@ -76,7 +76,7 @@ public class Main extends SimpleApplication {
     private void initPhysics() {
         bullet = new BulletAppState();
         stateManager.attach(bullet);
-        bullet.setDebugEnabled(true);
+//        bullet.setDebugEnabled(true);
     }
     
     private void initFallingRocks() {
