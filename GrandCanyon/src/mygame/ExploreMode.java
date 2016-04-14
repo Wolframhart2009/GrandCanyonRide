@@ -8,10 +8,10 @@ import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
+import raft.Raft;
 import world.Sky;
 import world.Water;
 import world.World;
-import raft.Raft;
 
 /**
  *
