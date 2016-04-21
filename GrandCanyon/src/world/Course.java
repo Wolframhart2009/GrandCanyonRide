@@ -16,6 +16,7 @@ import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import mygame.CanyonMode;
 import mygame.Main;
 
 /**
@@ -23,7 +24,7 @@ import mygame.Main;
  * @author Robyn
  */
 public class Course {
-    private Main msa;
+    private CanyonMode msa;
     private Material mat;
     private Node nodeStart, nodeFinish;
     private Geometry geomStart, geomFinish;
@@ -31,7 +32,7 @@ public class Course {
     
     private Vector3f startPos, finishPos;
     
-    public Course(Main m, World w) {
+    public Course(CanyonMode m, World w) {
         msa = m;
         startPos = new Vector3f(-190f, w.getWaterHeight(), -135f);
 //        startPos = new Vector3f(0f, w.getWaterHeight() + 5f, 20f);

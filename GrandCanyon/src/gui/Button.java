@@ -99,8 +99,10 @@ public class Button extends Node implements AnalogListener{
     }
     
     private void initMouse(){
-        sa.getInputManager().addMapping("clicked", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        sa.getInputManager().addListener(this, "clicked");
+        if(!sa.getInputManager().hasMapping("clicked")){
+            sa.getInputManager().addMapping("clicked", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        }
+        sa.getInputManager().addListener(this, "clicked");        
     }
 
     public void onAnalog(String name, float value, float tpf) {

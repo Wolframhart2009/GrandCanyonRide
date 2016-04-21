@@ -72,6 +72,7 @@ public class MainMenu extends AbstractAppState{
         buttons[0].setIdle("Interface/Button/TestIdle.png", false);
         buttons[0].setActive("Interface/Button/TestActive.png", false);
         buttons[0].setText(lFont, "River Run");
+        buttons[0].addClickTransition(this, new CanyonRunMode());
         buttons[0].finish();
         
         buttons[1] = new Button(app, app.getGuiNode(), DisplaySettings.screenX/4 + (BUTTON_PADDING * 1.5f), DisplaySettings.screenY/2 - BUTTON_PADDING, 50, 256);

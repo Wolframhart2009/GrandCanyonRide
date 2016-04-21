@@ -11,17 +11,18 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
+import mygame.CanyonMode;
 
 /**
  *
  * @author Graeme
  */
 public class RapidEmitter extends ParticleEmitter{    
-    SimpleApplication sa;
+    CanyonMode sa;
     
     Node parNode;
     
-    public RapidEmitter(SimpleApplication s, Node p){
+    public RapidEmitter(CanyonMode s, Node p){
         super("Rapid_Spray_Emitter", ParticleMesh.Type.Triangle, 30);
         
         this.sa = s;

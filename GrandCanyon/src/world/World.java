@@ -18,6 +18,7 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
 import com.jme3.terrain.heightmap.ImageBasedHeightMap;
 import com.jme3.texture.Texture;
+import mygame.CanyonMode;
 import mygame.Main;
 /**
  *
@@ -40,9 +41,9 @@ public class World {
     private Material mapMat;
     
     
-    private Main msa;
+    private CanyonMode msa;
     
-    public World(Main m, String path, int size){
+    public World(CanyonMode m, String path, int size){
         msa = m;
         this.size = size;
         this.waterHeight = INIT_WATER_HEIGHT;
@@ -50,7 +51,7 @@ public class World {
         initMapTextures(path);
         initMap(NORMALIZE);
         initWorld(size);
-        initPhysics();
+        //initPhysics();
     }
     
     /*

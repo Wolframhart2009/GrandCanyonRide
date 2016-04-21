@@ -11,6 +11,7 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Cylinder;
+import mygame.CanyonMode;
 import mygame.Main;
 import world.World;
 
@@ -19,13 +20,13 @@ import world.World;
  * @author Robyn
  */
 public class FloatingLog {
-    private Main msa;
+    private CanyonMode msa;
     private Node nodeLog;
     private Material matLog;
     private Geometry geomLog;
     private RigidBodyControl physLog;
     
-    public FloatingLog(Main m, World w) {
+    public FloatingLog(CanyonMode m, World w) {
         msa = m;
         
         initMaterial();

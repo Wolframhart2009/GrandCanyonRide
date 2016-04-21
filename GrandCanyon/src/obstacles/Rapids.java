@@ -12,12 +12,13 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.shape.Box;
 import java.util.Random;
+import mygame.CanyonMode;
 import world.World;
 
 public class Rapids extends Node{
     public static final Box RapidMesh = new Box(4f, .25f, 4f);
     
-    private SimpleApplication sa;
+    private CanyonMode sa;
     private World world;
     
     private Geometry rapidGeom;
@@ -25,7 +26,7 @@ public class Rapids extends Node{
     private RapidEmitter[] emit = new RapidEmitter[4];
             
     
-    public Rapids(SimpleApplication s, World w, Vector3f location){
+    public Rapids(CanyonMode s, World w, Vector3f location){
         this.sa = s;
         this.world = w;
         

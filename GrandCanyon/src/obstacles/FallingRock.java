@@ -11,6 +11,7 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Sphere;
+import mygame.CanyonMode;
 import mygame.Main;
 import world.World;
 
@@ -19,13 +20,13 @@ import world.World;
  * @author Robyn
  */
 public class FallingRock {
-    private Main msa;
+    private CanyonMode msa;
     private Node nodeRock;
     private Material matRock;
     private Geometry geomRock;
     private RigidBodyControl physRock;
 
-    public FallingRock(Main m, World w) {
+    public FallingRock(CanyonMode m, World w) {
         msa = m;
         
         initMaterial();

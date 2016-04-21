@@ -13,6 +13,7 @@ import com.jme3.post.filters.LightScatteringFilter;
 import com.jme3.scene.Spatial;
 import com.jme3.texture.Texture;
 import com.jme3.util.SkyFactory;
+import mygame.CanyonMode;
 
 /**
  *
@@ -22,10 +23,10 @@ public class Sky {
     
     private Spatial skyBox;
             
-    private SimpleApplication sa;
+    private CanyonMode sa;
     private DirectionalLight light;
  
-    public Sky(SimpleApplication sa, String path, boolean isSphere, DirectionalLight li){
+    public Sky(CanyonMode sa, String path, boolean isSphere, DirectionalLight li){
         this.sa = sa;
         this.light = li;
         

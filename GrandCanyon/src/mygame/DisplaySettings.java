@@ -28,13 +28,12 @@ public class DisplaySettings {
     
     private DirectionalLight mainLight;
     
-    SimpleApplication  sa;
+    CanyonMode  sa;
     
-    public DisplaySettings(SimpleApplication sa, World w){
+    public DisplaySettings(CanyonMode sa, World w){
         this.sa = sa;
         
         initLights();
-        initFlyCam(w);
         initCoordCross();
     }
 
@@ -51,21 +50,6 @@ public class DisplaySettings {
         s.setSettings(aps);
         s.setShowSettings(false);
         s.setDisplayStatView(false);
-    }
-    
-    public void initFlyCam(World w){
-        Camera cam = sa.getCamera();
-        sa.getFlyByCamera().setMoveSpeed(50.0f);
-//        cam.setLocation(new Vector3f(5f, w.getWaterHeight() + 5f, 5f));
-//        cam.lookAt(new Vector3f(0f, w.getWaterHeight() + 1f, 20f), Vector3f.UNIT_Y);
-        
-        // looks at start line
-//        cam.setLocation(new Vector3f(-190f, w.getWaterHeight() + 20f, -100f));
-//        cam.lookAt(new Vector3f(-190f, w.getWaterHeight(), -135f), Vector3f.UNIT_Y);
-        
-        // looks at finish line
-        cam.setLocation(new Vector3f(2090f, w.getWaterHeight() + 20f, 845f));
-        cam.lookAt(new Vector3f(2090f, w.getWaterHeight(), 820f), Vector3f.UNIT_Y);
     }
     
     private void initLights(){

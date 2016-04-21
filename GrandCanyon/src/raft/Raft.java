@@ -19,6 +19,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Cylinder;
+import mygame.CanyonMode;
 import mygame.Main;
 import world.World;
 
@@ -27,7 +28,7 @@ import world.World;
  * @author Robyn
  */
 public class Raft {
-    private Main msa;
+    private CanyonMode msa;
     private Material matRaft;
     private Node nodeRaft;
     private Geometry[] geoms; // holds a geometry for each log in the raft
@@ -37,7 +38,7 @@ public class Raft {
     private static final float OFFSETSPEED = 2f;
     private static final int NUM_LOGS_IN_RAFT = 5;
     
-    public Raft(Main m, World w) {
+    public Raft(CanyonMode m, World w) {
         msa = m;
         xOffset = 0;
         zOffset = 0;

@@ -31,6 +31,7 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.texture.Texture2D;
 import com.jme3.water.SimpleWaterProcessor;
 import com.jme3.water.WaterFilter;
+import mygame.CanyonMode;
 import mygame.Main;
 
 /**
@@ -43,11 +44,11 @@ public class Water {
     private WaterFilter watFilter;
     private RigidBodyControl waterPhys;
     
-    private Main msa;
+    private CanyonMode msa;
     private DirectionalLight light;
     private World world;
     
-    public Water(Main m, World w, DirectionalLight l){
+    public Water(CanyonMode m, World w, DirectionalLight l){
     
         this.msa = m;
         this.light = l;
