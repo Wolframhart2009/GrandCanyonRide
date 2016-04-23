@@ -11,6 +11,7 @@ import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
@@ -96,6 +97,14 @@ public class Raft {
         physRaft.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_03);
         physRaft.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
         physRaft.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
+    }
+    
+    public Vector3f getPos(){
+        return nodeRaft.getLocalTranslation();
+    }
+    
+    public Quaternion getRot(){
+        return nodeRaft.getLocalRotation();
     }
     
     private AnalogListener analogListener = new AnalogListener() {

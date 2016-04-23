@@ -7,6 +7,7 @@ package mygame;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.BulletAppState;
 import gui.Bar;
 
@@ -15,7 +16,8 @@ import gui.Bar;
  * @author Graeme
  */
 public class CanyonRunMode extends CanyonMode{
-
+    private AudioNode damage1;
+    private AudioNode damage2;
     private int hitpoints;
     private Bar hitpointsBar;
     
@@ -37,8 +39,23 @@ public class CanyonRunMode extends CanyonMode{
         initHitBar();
         this.gameOver = false;
         
+        this.initAudio();
         this.initCourse();
         this.initRapids();
+    }
+    
+    private void initAudio(){
+        damage1 = new AudioNode(app.getAssetManager(), "Sound/Raft/Damage_1.wav", false);
+        damage1.setLooping(false);
+        damage1.setPositional(false);
+        damage1.setVolume(5.0f);
+        app.getRootNode().attachChild(damage1);
+        
+        damage2 = new AudioNode(app.getAssetManager(), "Sound/Raft/Damage_2.wav", false);
+        damage2.setLooping(false);
+        damage2.setPositional(false);
+        damage2.setVolume(5.0f);
+        app.getRootNode().attachChild(damage2);    
     }
     
     private void initHitBar(){
@@ -58,7 +75,11 @@ public class CanyonRunMode extends CanyonMode{
     public void adjustHitPoints(int newValue){
         hitpoints = newValue;
         hitpointsBar.setCurrentDisplay(newValue);
-        
+        if(hitpoints > 7){
+            damage1.playInstance();
+        } else{
+            damage2.playInstance();
+        }
     }
     
     public void decHitPoints(){
@@ -80,6 +101,7 @@ public class CanyonRunMode extends CanyonMode{
 
     @Override
     public void update(float tpf) {
+        super.update(tpf);
         if(!(tpf > 1.0)){
            time+= tpf;
         }

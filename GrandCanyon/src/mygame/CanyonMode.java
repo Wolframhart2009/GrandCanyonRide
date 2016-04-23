@@ -179,4 +179,13 @@ public class CanyonMode extends AbstractAppState{
         app.getGuiNode().detachAllChildren();
         app.getRootNode().detachAllChildren();
     }
+
+    @Override
+    public void update(float tpf) {
+        app.getListener().setLocation(raft.getPos());
+        app.getListener().setRotation(raft.getRot());
+        System.out.println(app.getListener().getLocation());
+    }
+   
+   
 }

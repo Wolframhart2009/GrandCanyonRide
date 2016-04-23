@@ -7,6 +7,9 @@ package mygame;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.audio.AudioData;
+import com.jme3.audio.AudioData.DataType;
+import com.jme3.audio.AudioNode;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.math.ColorRGBA;
@@ -32,6 +35,10 @@ public class MainMenu extends AbstractAppState{
     private BitmapText text;  
     private Button[] buttons = new Button[3];
     
+    private AudioNode mainMusic;
+    private AudioNode buttonClick;
+    
+    
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         this.app = (Main) app;
@@ -42,7 +49,7 @@ public class MainMenu extends AbstractAppState{
         initImage();
         initText();
         initButtons();
-        
+        initAudio();
     }
     
     private void initImage(){
@@ -73,6 +80,7 @@ public class MainMenu extends AbstractAppState{
         buttons[0].setActive("Interface/Button/TestActive.png", false);
         buttons[0].setText(lFont, "River Run");
         buttons[0].addClickTransition(this, new CanyonRunMode());
+        buttons[0].addClickSound(app.getRootNode(), "Sound/Button/buttonclick.wav");
         buttons[0].finish();
         
         buttons[1] = new Button(app, app.getGuiNode(), DisplaySettings.screenX/4 + (BUTTON_PADDING * 1.5f), DisplaySettings.screenY/2 - BUTTON_PADDING, 50, 256);
@@ -80,18 +88,30 @@ public class MainMenu extends AbstractAppState{
         buttons[1].setActive("Interface/Button/TestActive.png", false);
         buttons[1].setText(lFont, "Exploration");
         buttons[1].addClickTransition(this, new ExploreMode());
+        buttons[1].addClickSound(app.getRootNode(), "Sound/Button/buttonclick.wav");
         buttons[1].finish();
     
         buttons[2] = new Button(app, app.getGuiNode(), DisplaySettings.screenX/4 + (BUTTON_PADDING * 1.5f), DisplaySettings.screenY/2 - BUTTON_PADDING * 2, 50, 256);
         buttons[2].setIdle("Interface/Button/TestIdle.png", false);
         buttons[2].setActive("Interface/Button/TestActive.png", false);
         buttons[2].setText(lFont, "Quit Game");
+        buttons[2].addClickSound(app.getRootNode(), "Sound/Button/buttonclick.wav");
         buttons[2].finish();
+    }
+    
+    public void initAudio(){
+        mainMusic = new AudioNode(app.getAssetManager(), "Music/Mainmenu/Relax_music.wav", false);
+        mainMusic.setLooping(true);
+        mainMusic.setPositional(false);
+        mainMusic.setVolume(3.0f);
+        app.getRootNode().attachChild(mainMusic);
+        mainMusic.play();
     }
     
     @Override
     public void cleanup(){
         super.cleanup();
+        mainMusic.stop();
         app.getStateManager().detach(this);
         app.getGuiNode().detachAllChildren();
         app.getRootNode().detachAllChildren();
