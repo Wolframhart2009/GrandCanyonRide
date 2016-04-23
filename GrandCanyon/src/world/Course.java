@@ -30,13 +30,21 @@ public class Course {
     private Geometry geomStart, geomFinish;
     private GhostControl physStart, physFinish;
     
+    private Vector3f positions[];
+    private int posCounter;
+    private int posTraversal;
+    
     private Vector3f startPos, finishPos;
     
-    public Course(CanyonMode m, World w) {
+    public Course(CanyonMode m, World w, int size) {
         msa = m;
         startPos = new Vector3f(-190f, w.getWaterHeight(), -135f);
 //        startPos = new Vector3f(0f, w.getWaterHeight() + 5f, 20f);
         finishPos = new Vector3f(2090f, w.getWaterHeight(), 820f);
+        
+        positions = new Vector3f[size];
+        posCounter = 0;
+        posTraversal = 0;
         
         initCourse();
 //        initPhysics();
@@ -78,6 +86,23 @@ public class Course {
         
         nodeFinish.attachChild(geomFinish);
         msa.getRootNode().attachChild(nodeFinish);
+    }
+    
+    public void addPosition(Vector3f pos){
+        positions[posCounter] = pos;
+    }
+    
+    public void addPositions(Vector3f pos[]){
+        for(int i = 0; i < pos.length; i++){
+            positions[posCounter] = pos[i];
+            posCounter++;
+        }
+    }
+    
+    public Vector3f getNextPos(){
+       Vector3f ret = positions[posTraversal];
+       posTraversal++;
+       return ret;
     }
     
     private void placeLine() {

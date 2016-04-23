@@ -84,7 +84,8 @@ public class Raft {
         msa.getInputManager().addMapping("Back", new KeyTrigger(KeyInput.KEY_K));
         msa.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_J));
         msa.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_L));
-        msa.getInputManager().addListener(analogListener, new String[]{"Forward", "Back", "Left", "Right"});
+        msa.getInputManager().addMapping("Pos", new KeyTrigger(KeyInput.KEY_P));
+        msa.getInputManager().addListener(analogListener, new String[]{"Forward", "Back", "Left", "Right", "Pos"});
     }
     
     private void initPhysics() {
@@ -107,7 +108,10 @@ public class Raft {
                 zOffset += tpf * OFFSETSPEED;
             } else if (name.equals("Back")) {
                 zOffset -= tpf * OFFSETSPEED;
+            } else if (name.equals("Pos")){
+                System.out.println(nodeRaft.getLocalTranslation());
             }
+            
         }
     };
     

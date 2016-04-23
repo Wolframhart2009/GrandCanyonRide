@@ -107,8 +107,6 @@ public class Rapids extends Node{
         public void collision(PhysicsCollisionEvent event) {
            String objAName = event.getNodeA().getName();
            String objBName = event.getNodeB().getName();
-           System.out.println(objAName);
-           System.out.println(objBName);
    
            if(objAName.equals("Raft") && objBName.equals("Rapids")){
                

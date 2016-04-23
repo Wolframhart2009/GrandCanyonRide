@@ -37,6 +37,7 @@ public class CanyonRunMode extends CanyonMode{
         initHitBar();
         this.gameOver = false;
         
+        this.initCourse();
         this.initRapids();
     }
     
