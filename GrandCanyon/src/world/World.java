@@ -2,6 +2,7 @@ package world;
 
 import com.bulletphysics.collision.shapes.CollisionShape;
 import com.jme3.app.SimpleApplication;
+import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.HeightfieldCollisionShape;
 import com.jme3.bullet.collision.shapes.MeshCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -51,7 +52,7 @@ public class World {
         initMapTextures(path);
         initMap(NORMALIZE);
         initWorld(size);
-        //initPhysics();
+        initPhysics();
     }
     
     /*
@@ -119,6 +120,8 @@ public class World {
         RigidBodyControl terrainPhys = new RigidBodyControl(0f);
         physWorld.addControl(terrainPhys);
         msa.bullet.getPhysicsSpace().add(terrainPhys);
+        terrainPhys.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
+        terrainPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
     }
     
     public void addShadows(DirectionalLight light){

@@ -21,6 +21,9 @@ public class CanyonRunMode extends CanyonMode{
     
     private float time;
     private boolean gameOver;
+    private boolean recovery;
+    
+    boolean counting = false;
     
     public CanyonRunMode(){
         super();
@@ -32,7 +35,9 @@ public class CanyonRunMode extends CanyonMode{
         super.initialize(stateManager, app);
         
         initHitBar();
-        gameOver = false;
+        this.gameOver = false;
+        
+        this.initRapids();
     }
     
     private void initHitBar(){
@@ -59,6 +64,14 @@ public class CanyonRunMode extends CanyonMode{
         adjustHitPoints(hitpoints - 1);
     }
     
+    public void setRecovery(){
+        this.recovery = true;
+    }
+    
+    public boolean getRecovery(){
+        return this.recovery;
+    }
+    
     @Override
     public void cleanup() {
         super.cleanup();
@@ -74,6 +87,19 @@ public class CanyonRunMode extends CanyonMode{
 //            time = 0;
 //            this.decHitPoints();
 //        }
+        
+        if(gameOver == false && recovery == true){
+            
+            if(counting == false){
+                counting = true;
+                time = 0;
+            }
+            
+            if(time > 5){
+                recovery = false;
+                counting = false;
+            }
+        }
         
         if(hitpoints == 0 && gameOver == false){
             time = 0;

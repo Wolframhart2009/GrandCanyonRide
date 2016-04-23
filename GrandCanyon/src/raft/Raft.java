@@ -4,6 +4,7 @@
  */
 package raft;
 
+import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.AnalogListener;
@@ -52,7 +53,7 @@ public class Raft {
         Vector3f startPos = new Vector3f(0f, w.getWaterHeight() + 3f, 20f);
         geoms = new Geometry[NUM_LOGS_IN_RAFT];
         
-        nodeRaft = new Node();
+        nodeRaft = new Node("Raft");
         nodeRaft.setLocalTranslation(startPos);
         
         matRaft = new Material(msa.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
@@ -91,6 +92,9 @@ public class Raft {
         nodeRaft.addControl(physRaft);
         physRaft.setFriction(0f);
         msa.bullet.getPhysicsSpace().add(physRaft);
+        physRaft.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_03);
+        physRaft.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
+        physRaft.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
     }
     
     private AnalogListener analogListener = new AnalogListener() {

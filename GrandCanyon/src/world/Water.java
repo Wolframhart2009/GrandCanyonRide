@@ -5,6 +5,7 @@
 package world;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
@@ -24,6 +25,7 @@ import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
 import com.jme3.scene.shape.Box;
@@ -86,6 +88,7 @@ public class Water {
         msa.getRootNode().attachChild(waterNode);
         waterNode.setLocalTranslation(0, w.getWaterHeight(), 0);
         waterNode.setCullHint(Spatial.CullHint.Always); //This makes it invisible
+        
     }
     
     private void initPhysics() {
@@ -94,6 +97,8 @@ public class Water {
         waterPhys.setRestitution(0.0f);
         waterNode.addControl(waterPhys);
         msa.bullet.getPhysicsSpace().add(waterPhys);
+        waterPhys.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
+        waterPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
     }
     
     public void updateWaterHeight(){

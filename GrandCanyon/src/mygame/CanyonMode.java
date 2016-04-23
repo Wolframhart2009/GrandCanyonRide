@@ -18,6 +18,7 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 import obstacles.FallingRock;
 import obstacles.FloatingLog;
+import obstacles.Rapids;
 import raft.Raft;
 import world.Course;
 import world.Sky;
@@ -37,11 +38,13 @@ public class CanyonMode extends AbstractAppState{
     Raft raft;
     Course course;
     
+    private Rapids rapids[];
     private FallingRock rocks[];
     private FloatingLog logs[];
-    
+     
     private static final int NUM_ROCKS = 1;
     private static final int NUM_LOGS = 1;
+    private static final int NUM_RAPIDS = 1;
 
     boolean addedRapid = false;
     
@@ -79,11 +82,11 @@ public class CanyonMode extends AbstractAppState{
         asm.attach(bullet);
     }
     
-    private void initCourse() {
+    public void initCourse() {
         course = new Course(this, w);
     }
     
-    private void initFallingRocks() {
+    public void initFallingRocks() {
         rocks = new FallingRock[NUM_ROCKS];
         
         for(int i = 0; i < NUM_ROCKS; i++) {
@@ -91,7 +94,21 @@ public class CanyonMode extends AbstractAppState{
         }
     }
     
-    private void initFloatingLogs() {
+    public void initRapids() {
+        rapids = new Rapids[NUM_RAPIDS];
+        
+        for(int i = 0; i < NUM_RAPIDS; i++) {
+            float yPos = w.getWaterHeight();
+            float xPos = 0;
+            float zPos = 20;
+            
+            Vector3f pos = new Vector3f(xPos, yPos, zPos); 
+            
+            rapids[i] = new Rapids(this, w, pos);
+        }
+    }
+    
+    public void initFloatingLogs() {
         logs = new FloatingLog[NUM_LOGS];
         
         for(int i = 0; i < NUM_LOGS; i++) {
