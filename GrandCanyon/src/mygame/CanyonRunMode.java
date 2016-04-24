@@ -9,6 +9,9 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.audio.AudioNode;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
+import com.jme3.math.ColorRGBA;
 import gui.Bar;
 import gui.Timer;
 import java.util.Random;
@@ -23,7 +26,8 @@ public class CanyonRunMode extends CanyonMode{
     private int hitpoints;
     private Bar hitpointsBar;
     private Timer timerGUI;
-
+    private BitmapText timerText;
+    private BitmapFont timerFont;
     
     private float time;
     private float timer, score;
@@ -43,7 +47,7 @@ public class CanyonRunMode extends CanyonMode{
         super.initialize(stateManager, app);
         
         initHitBar();
-        initGUITimer();
+        initTimerText();
         this.gameOver = false;
         
         this.initAudio();
@@ -95,17 +99,17 @@ public class CanyonRunMode extends CanyonMode{
         adjustHitPoints(hitpoints - 1);
     }
     
-    private void initGUITimer() {
-        System.out.println("initializing GUI timer");
-        courseActive = false;
-        timer = 0;
-        score = 0;
-        
-        timerGUI = new Timer(app, app.getGuiNode(), 
-                DisplaySettings.screenX/8 - 100, DisplaySettings.screenY/8 - 75, 
-                50, 256);
-//        timerGUI.setText(timer);
-        timerGUI.finish();
+    private void initTimerText() {
+//        System.out.println("initializing timer");
+        timerFont = app.getAssetManager().loadFont("Interface/Fonts/CenturySchoolbook.fnt");
+                
+        timerText = new BitmapText(timerFont, false);
+        timerText.setColor(ColorRGBA.White);
+        timerText.setSize(40f);
+        timerText.setText("Time: 0.00 sec");
+        timerText.setLocalTranslation(DisplaySettings.screenX/2 - 150, DisplaySettings.screenY, 0);
+        timerText.move(0, 0, 1); //Move to foreground
+        app.getGuiNode().attachChild(timerText);
     }
     
     public void setRecovery(){
@@ -138,7 +142,8 @@ public class CanyonRunMode extends CanyonMode{
         if(courseActive) {
             timer += tpf;
 //            System.out.println("Elapsed time: " + timer);
-            timerGUI.setText(timer);
+            String str = String.format("Time: %3.2f sec", timer);
+            timerText.setText(str);
             
             float randomFloat = random.nextFloat();
             if(randomFloat < ROCKFALL_PROBABILITY) {
