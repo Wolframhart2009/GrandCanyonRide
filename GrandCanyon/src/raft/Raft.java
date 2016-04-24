@@ -20,6 +20,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Cylinder;
 import mygame.CanyonMode;
 import world.World;
@@ -36,7 +37,7 @@ public class Raft {
     private Vector3f startPosition;
     
     private VehicleControl raftVehicleControl;
-    private final float accelerationForce = 1000.0f;
+    private final float accelerationForce = 5000.0f;
     private float steeringValue;
     private float accelerationValue;
     
@@ -47,7 +48,7 @@ public class Raft {
     
     public Raft(CanyonMode m, World w) {
         msa = m;
-        startPosition = new Vector3f(0f, w.getWaterHeight() + 3f, 20f);
+        startPosition = new Vector3f(0f, w.getWaterHeight() + 1f, 20f);
         steeringValue = 0;
         accelerationValue = 0;
         
@@ -94,13 +95,13 @@ public class Raft {
         
         CompoundCollisionShape raftShape = new CompoundCollisionShape();
         BoxCollisionShape box = new BoxCollisionShape(new Vector3f(RAFT_WIDTH, RAFT_HEIGHT, RAFT_LENGTH));
-        raftShape.addChildShape(box, new Vector3f(0, 1, 0));
-        raftVehicleControl = new VehicleControl(raftShape, 400f);
+        raftShape.addChildShape(box, new Vector3f(0, 0, 0));
+        raftVehicleControl = new VehicleControl(raftShape, 800f);
         nodeRaft.addControl(raftVehicleControl);
         
-        float stiffness = 60.0f;//200=f1 car
+        float stiffness = 100.0f;//200=f1 car
         float compValue = .3f; //(should be lower than damp)
-        float dampValue = .4f;
+        float dampValue = 10f;
         raftVehicleControl.setSuspensionCompression(compValue * 2.0f * FastMath.sqrt(stiffness));
         raftVehicleControl.setSuspensionDamping(dampValue * 2.0f * FastMath.sqrt(stiffness));
         raftVehicleControl.setSuspensionStiffness(stiffness);
@@ -109,7 +110,7 @@ public class Raft {
         //Create four wheels and add them at their locations
         Vector3f wheelDirection = new Vector3f(0, -1, 0); // was 0, -1, 0
         Vector3f wheelAxle = new Vector3f(-1, 0, 0); // was -1, 0, 0
-        float radius = 2f;
+        float radius = 1.75f;
         float restLength = 0.3f;
         float yOff = 0.8f;
         float xOff = 2.5f;
@@ -163,6 +164,11 @@ public class Raft {
         nodeRaft.attachChild(node3);
         nodeRaft.attachChild(node4);
         msa.getRootNode().attachChild(nodeRaft);
+        
+        node1.setCullHint(Spatial.CullHint.Always);
+        node2.setCullHint(Spatial.CullHint.Always);
+        node3.setCullHint(Spatial.CullHint.Always);
+        node4.setCullHint(Spatial.CullHint.Always);
         
         msa.bullet.getPhysicsSpace().add(raftVehicleControl);
         raftVehicleControl.setPhysicsLocation(startPosition);
