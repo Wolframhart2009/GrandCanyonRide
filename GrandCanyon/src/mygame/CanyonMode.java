@@ -78,9 +78,9 @@ public class CanyonMode extends AbstractAppState{
 //        raft = new Raft(this, w, new Vector3f(0f, w.getWaterHeight() + 1f, 22f));
         raft = new Raft(this, w, new Vector3f(-190f, w.getWaterHeight() + 1f, -100f));
         
-        initChaseCam();
+//        initChaseCam();
         
-//        initDebug();
+        initDebug();
    }
     
     private void initPhysics() {
@@ -172,8 +172,8 @@ public class CanyonMode extends AbstractAppState{
    }
    
    private void initDebug(){
-//        this.app.getFlyByCamera().setEnabled(true);
-//        this.app.getFlyByCamera().setMoveSpeed(50.0f);
+        this.app.getFlyByCamera().setEnabled(true);
+        this.app.getFlyByCamera().setMoveSpeed(50.0f);
         bullet.setDebugEnabled(true);
                 
 //        getCamera().setLocation(new Vector3f(5f, w.getWaterHeight() + 5f, 5f));
@@ -183,13 +183,16 @@ public class CanyonMode extends AbstractAppState{
 //        getCamera().lookAt(new Vector3f(-5,0.5f,10), Vector3f.UNIT_Y);
         
         // looks at start line
-//        cam.setLocation(new Vector3f(-190f, w.getWaterHeight() + 20f, -100f));
-//        cam.lookAt(new Vector3f(-190f, w.getWaterHeight(), -135f), Vector3f.UNIT_Y);
+//        getCamera().setLocation(new Vector3f(-190f, w.getWaterHeight() + 20f, -100f));
+//        getCamera().lookAt(new Vector3f(-190f, w.getWaterHeight(), -135f), Vector3f.UNIT_Y);
+        
+        // looks at original finish line
+//        getCamera().setLocation(new Vector3f(2090f, w.getWaterHeight() + 20f, 845f));
+//        getCamera().lookAt(new Vector3f(2090f, w.getWaterHeight(), 820f), Vector3f.UNIT_Y);
         
         // looks at finish line
-//        this.getCamera().setLocation(new Vector3f(2090f, w.getWaterHeight() + 20f, 845f));
-//        this.getCamera().lookAt(new Vector3f(2090f, w.getWaterHeight(), 820f), Vector3f.UNIT_Y);
-        
+        getCamera().setLocation(new Vector3f(660f, w.getWaterHeight() + 20f, -1066f));
+        getCamera().lookAt(new Vector3f(660f, w.getWaterHeight(), -1066f), Vector3f.UNIT_Y);
    }
     
    @Override

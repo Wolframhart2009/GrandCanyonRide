@@ -78,7 +78,7 @@ public class Raft {
         for(int i = 0; i < NUM_LOGS_IN_RAFT; i++) {
             geoms[i] = new Geometry("log" + i, log);
             geoms[i].setMaterial(matRaft);
-//            geoms[i].setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+            geoms[i].setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
             geoms[i].setLocalTranslation(-2.5f + (1.25f * i), 0f, 0f);
         }
         
@@ -190,6 +190,7 @@ public class Raft {
         raftVehicleControl.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_03);
         raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
         raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
+        raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_04);
     }
     
     public Vector3f getPos(){
@@ -204,9 +205,9 @@ public class Raft {
         public void onAction(String binding, boolean isPressed, float tpf) {
             if (binding.equals("Left")) {
                 if (isPressed) {
-                    steeringValue += .5f;
+                    steeringValue += .25f;
                 } else {
-                    steeringValue += -.5f;
+                    steeringValue += -.25f;
                 }
                 raftVehicleControl.steer(steeringValue);
             } else if (binding.equals("Right")) {

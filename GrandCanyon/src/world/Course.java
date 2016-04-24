@@ -4,6 +4,8 @@
  */
 package world;
 
+import com.jme3.bullet.collision.PhysicsCollisionObject;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
@@ -15,9 +17,9 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import mygame.CanyonMode;
-import mygame.Main;
 
 /**
  *
@@ -27,7 +29,7 @@ public class Course {
     private CanyonMode msa;
     private Material mat;
     private Node nodeStart, nodeFinish;
-    private Geometry geomStart, geomFinish;
+    private Geometry geomStartBox, geomFinishBox;
     private GhostControl physStart, physFinish;
     
     private Vector3f positions[];
@@ -40,52 +42,69 @@ public class Course {
         msa = m;
         startPos = new Vector3f(-190f, w.getWaterHeight(), -135f);
 //        startPos = new Vector3f(0f, w.getWaterHeight() + 5f, 20f);
-        finishPos = new Vector3f(2090f, w.getWaterHeight(), 820f);
+//        finishPos = new Vector3f(2090f, w.getWaterHeight(), 820f); // original finish line
+        finishPos = new Vector3f(660f, w.getWaterHeight(), -1066f);
         
         positions = new Vector3f[size];
         posCounter = 0;
         posTraversal = 0;
         
         initCourse();
-//        initPhysics();
+        initPhysics();
     }
     
     private void initCourse() {
         
-        mat = new Material(msa.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", new ColorRGBA(0.5f, 0.5f, 0.5f, 0.25f));
-//        mat.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+        mat = new Material(msa.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+        mat.setTexture("DiffuseMap", msa.getAssetManager().loadTexture("Textures/checkeredflag1.jpg"));
         
-        Box b = new Box(1,1,1);
+        Box b = new Box(1,1,1);        
         
         // place starting line
-        Node nodeStart = new Node();
+        nodeStart = new Node();
         nodeStart.setLocalTranslation(startPos);
-        geomStart = new Geometry("start line", b);
-        geomStart.scale(60,10,1);
-        geomStart.setMaterial(mat);
-//        geomStart.setQueueBucket(Bucket.Transparent);
+        geomStartBox = new Geometry("line start", b);
+        geomStartBox.scale(60,5,1);
+        geomStartBox.setMaterial(mat);
+//        geomStartBox.setCullHint(Spatial.CullHint.Always);
         
         Quaternion rot = new Quaternion();
         rot.fromAngleAxis(-1 * FastMath.PI / 16, Vector3f.UNIT_Y);
         nodeStart.setLocalRotation(rot);
         
-        nodeStart.attachChild(geomStart);
+        nodeStart.attachChild(geomStartBox);
         msa.getRootNode().attachChild(nodeStart);
         
         // place finish line
-        Node nodeFinish = new Node();
+        nodeFinish = new Node();
         nodeFinish.setLocalTranslation(finishPos);
-        geomFinish = new Geometry("finish line", b);
-        geomFinish.scale(70,10,1);
-        geomFinish.setMaterial(mat);
+        geomFinishBox = new Geometry("line finish", b);
+//        geomFinishBox.scale(70,5,1); // original finish line dimensions
+        geomFinishBox.scale(60,5,1);
+        geomFinishBox.setMaterial(mat);
+//        geomFinishBox.setCullHint(Spatial.CullHint.Always);
         
-//        rot = new Quaternion();
-//        rot.fromAngleAxis(0, Vector3f.UNIT_Y);
-//        nodeFinish.setLocalRotation(rot);
+        rot = new Quaternion();
+        rot.fromAngleAxis(-1 * FastMath.PI / 4, Vector3f.UNIT_Y);
+        nodeFinish.setLocalRotation(rot);
+        geomFinishBox.setMaterial(mat);
         
-        nodeFinish.attachChild(geomFinish);
+        nodeFinish.attachChild(geomFinishBox);
         msa.getRootNode().attachChild(nodeFinish);
+    }
+    
+    private void initPhysics() {
+        physStart = new CourseLineGhostControl(msa, this, new BoxCollisionShape(geomStartBox.getLocalScale()));
+        geomStartBox.addControl(physStart);
+        msa.bullet.getPhysicsSpace().add(physStart);
+        physStart.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);
+        physStart.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+        
+        physFinish = new CourseLineGhostControl(msa, this, new BoxCollisionShape(geomFinishBox.getLocalScale()));
+        geomFinishBox.addControl(physFinish);
+        msa.bullet.getPhysicsSpace().add(physFinish);
+        physFinish.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);
+        physFinish.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
     }
     
     public void addPosition(Vector3f pos){
@@ -105,11 +124,13 @@ public class Course {
        return ret;
     }
     
-    private void placeLine() {
-        
-        
+    public void hideLine(String lineName) {
+        if(lineName.equals("line start")) {
+            msa.bullet.getPhysicsSpace().remove(physStart);
+            geomStartBox.setCullHint(Spatial.CullHint.Always);
+        } else if(lineName.equals("line finish")) {
+            msa.bullet.getPhysicsSpace().remove(physFinish);
+            geomFinishBox.setCullHint(Spatial.CullHint.Always);
+        }
     }
-    
-    
-    
 }
