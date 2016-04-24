@@ -12,6 +12,7 @@ import com.jme3.bullet.control.VehicleControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -40,11 +41,13 @@ public class Raft {
     private final float accelerationForce = 5000.0f;
     private float steeringValue;
     private float accelerationValue;
+    private float speed;
     
     private static final int NUM_LOGS_IN_RAFT = 5;
     private static final float RAFT_LENGTH = 5;
     private static final float RAFT_WIDTH = 3;
     private static final float RAFT_HEIGHT = 1;
+    private static final float MAX_SPEED = 0;
     
     public Raft(CanyonMode m, World w) {
         msa = m;
@@ -86,6 +89,7 @@ public class Raft {
         msa.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_J));
         msa.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_L));
         msa.getInputManager().addListener(actionListener, new String[]{"Forward", "Back", "Left", "Right"});
+//        msa.getInputManager().addListener(analogListener, new String[]{"Forward", "Back"});
     }
     
     private void initPhysics() {
@@ -200,6 +204,8 @@ public class Raft {
                 } else {
                     accelerationValue -= accelerationForce;
                 }
+                speed = raftVehicleControl.getCurrentVehicleSpeedKmHour();
+                System.out.println("current speed = " + speed);
                 raftVehicleControl.accelerate(accelerationValue);
             } else if (binding.equals("Back")) {
                 if (isPressed) {
@@ -207,8 +213,23 @@ public class Raft {
                 } else {
                     accelerationValue += accelerationForce;
                 }
+                speed = raftVehicleControl.getCurrentVehicleSpeedKmHour();
+                System.out.println("current speed = " + speed);
                 raftVehicleControl.accelerate(accelerationValue);
             }
         }
     };
+    
+//    private AnalogListener analogListener = new AnalogListener() {
+//        public void onAnalog(String name, float value, float tpf) {
+//            if(name.equals("Forward")) {
+//                accelerationValue += accelerationForce * tpf;
+//            } else if(name.equals("Back")) {
+//                accelerationValue -= accelerationForce * tpf;
+//            }
+//            speed = raftVehicleControl.getCurrentVehicleSpeedKmHour();
+//            System.out.println("current speed = " + speed);
+//            raftVehicleControl.accelerate(accelerationValue);
+//        }
+//    };
 }
