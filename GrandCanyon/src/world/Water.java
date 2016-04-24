@@ -127,6 +127,10 @@ public class Water {
                 0));
     }
     
+    public void stopAudio() {
+        waterAudio.stop();
+    }
+    
     class WaterControl extends AbstractControl{
         
         private float time;

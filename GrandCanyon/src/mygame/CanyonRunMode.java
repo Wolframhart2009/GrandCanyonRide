@@ -135,6 +135,7 @@ public class CanyonRunMode extends CanyonMode{
     @Override
     public void cleanup() {
         super.cleanup();
+        
     }
 
     @Override
@@ -152,6 +153,10 @@ public class CanyonRunMode extends CanyonMode{
             if(randomFloat < ROCKFALL_PROBABILITY) {
                 this.addRock(raft.getPos());
             }
+        }
+        
+        if(!courseActive && timer > 0) {
+            gameOver = true;
         }
         
         if(!(tpf > 1.0)){
@@ -183,9 +188,11 @@ public class CanyonRunMode extends CanyonMode{
         
         if(gameOver){
             if(time >= 5.0){
+                GameOverScreen gos = new GameOverScreen(timer);
+                
                 this.cleanup();
                 asm.detach(this);
-                asm.attach(new MainMenu());
+                asm.attach(gos);
             }
         }
     }

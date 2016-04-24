@@ -43,8 +43,6 @@ public class CanyonMode extends AbstractAppState{
     Course course;
     
     private Rapids rapids[];
-//    private FallingRock rocks[];
-    private ArrayList<FallingRock> rocks;
     private FallingRock rock;
     private FloatingLog logs[];
     public Random random;
@@ -52,8 +50,8 @@ public class CanyonMode extends AbstractAppState{
     private boolean rockExists;
     private float rockTimer;
 
-    public static final float ROCKFALL_PROBABILITY = 0.005f;
-    private static final int MAX_NUM_ROCKS = 100;
+    public static final float ROCKFALL_PROBABILITY = 1f; // 0.005f;
+//    private static final int MAX_NUM_ROCKS = 100;
     private static final int NUM_LOGS = 1;
     private static final int NUM_RAPIDS = 16;
 
@@ -73,8 +71,6 @@ public class CanyonMode extends AbstractAppState{
 //        this.app.getFlyByCamera().setEnabled(true);
         this.app.getInputManager().setCursorVisible(false);
         
-        rocks = new ArrayList<FallingRock>();
-        
         initPhysics();
                 
         w = new World(this, "Scenes/Grand_Canyon.jpg", 4097);
@@ -90,9 +86,9 @@ public class CanyonMode extends AbstractAppState{
         
         random = new Random();
         
-//        initChaseCam();
+        initChaseCam();
         
-        initDebug();
+//        initDebug();
    }
     
     private void initPhysics() {
@@ -128,11 +124,6 @@ public class CanyonMode extends AbstractAppState{
     public void initFallingRocks() {        
         rockExists = false;
         rockTimer = 0;
-//        rockCount = 0;
-        
-//        for(int i = 0; i < NUM_ROCKS; i++) {
-//            rocks[i] = new FallingRock(this, w);
-//        }
     }
     
     public void addRock(Vector3f raftPosition) {
@@ -143,8 +134,8 @@ public class CanyonMode extends AbstractAppState{
             float z = random.nextFloat() * 2 - 1;
             int scale = random.nextInt(90) + 10; // random scaling factor of between 10 and 90
 
-            x *= scale;
-            z *= scale;
+//            x *= scale;
+//            z *= scale;
 
             x += raftPosition.x;
             z += raftPosition.z;
@@ -152,7 +143,6 @@ public class CanyonMode extends AbstractAppState{
             Vector3f rockPosition = new Vector3f(x, raftPosition.y + 50f, z);
 
             rock = new FallingRock(this, w, rockPosition);
-//            rocks.add(rock);
         }
         
     }
@@ -234,6 +224,14 @@ public class CanyonMode extends AbstractAppState{
    @Override
    public void cleanup(){
         super.cleanup();
+        water.stopAudio();
+        
+        if(rapids != null) {
+            for(Rapids r : rapids) {
+                r.stopAudio();
+            }
+        }
+        
         app.getStateManager().detach(bullet);
         app.getStateManager().detach(this);
         app.getGuiNode().detachAllChildren();
@@ -263,16 +261,5 @@ public class CanyonMode extends AbstractAppState{
             rockTimer = 0;
         }
         
-//        if(!rocks.isEmpty()) {
-//            for(FallingRock r : rocks) {
-//                if(r.getHasHitWater()) {
-//                    Vector3f impact = r.getPosition();
-//                    // TO DO: SPLASH
-//                    // TO DO: SOUND
-//                    r.remove();
-//    //                rocks.remove(r);
-//                }
-//            }
-//        }
     }
 }

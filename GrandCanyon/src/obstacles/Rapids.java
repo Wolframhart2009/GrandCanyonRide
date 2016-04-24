@@ -33,7 +33,7 @@ public class Rapids extends Node{
     
     private Geometry rapidGeom;
     private Material rapidMat;
-    private RapidEmitter[] emit = new RapidEmitter[4];
+    private RapidEmitter[] emit = new RapidEmitter[6];
             
     private AudioNode rapidSound;
     
@@ -75,6 +75,8 @@ public class Rapids extends Node{
         emit[1] = new RapidEmitter(sa, this);
         emit[2] = new RapidEmitter(sa, this);
         emit[3] = new RapidEmitter(sa, this);
+        emit[4] = new RapidEmitter(sa, this);
+        emit[5] = new RapidEmitter(sa, this);
         
         for(int i = 0; i < 4; i ++){
             float ranX = (ran.nextFloat() * 10) - 5;
@@ -113,6 +115,10 @@ public class Rapids extends Node{
         rapidSound.play();
     }
     
+    public void stopAudio() {
+        rapidSound.stop();
+    }
+    
     class vortexControl extends GhostControl implements PhysicsCollisionListener{
 
         public vortexControl(CollisionShape extent){
@@ -125,14 +131,14 @@ public class Rapids extends Node{
            String objBName = event.getNodeB().getName();
    
            if(objAName.equals("Raft") && objBName.equals("Rapids")){
-               System.out.println("rapid collision");
+//               System.out.println("rapid collision");
                if(runMode && !saM.getRecovery()){
                    saM.setRecovery();
                    saM.decHitPoints();
                }
            }
            else if(objAName.equals("Rapids") && objBName.equals("Raft")){
-               System.out.println("rapid collision");
+//               System.out.println("rapid collision");
                if(runMode && !saM.getRecovery()){
                    saM.setRecovery();
                    saM.decHitPoints();
