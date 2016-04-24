@@ -43,10 +43,10 @@ public class Rapids extends Node{
         initGeom();
         initEmitters();
         initPhysics();
-        if(location != null){
-            this.setLocalTranslation(location);
-            System.out.println("(Rapid added at location " + location );
-        }
+//        if(location != null){
+//            this.setLocalTranslation(location);
+//            System.out.println("Rapid added at location " + location );
+//        }
         
         if(sa instanceof CanyonRunMode){
             runMode = true;
@@ -107,8 +107,8 @@ public class Rapids extends Node{
         public void collision(PhysicsCollisionEvent event) {
            String objAName = event.getNodeA().getName();
            String objBName = event.getNodeB().getName();
-           System.out.println(objAName);
-           System.out.println(objBName);
+//           System.out.println(objAName);
+//           System.out.println(objBName);
    
            if(objAName.equals("Raft") && objBName.equals("Rapids")){
                
