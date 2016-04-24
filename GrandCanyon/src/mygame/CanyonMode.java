@@ -45,9 +45,12 @@ public class CanyonMode extends AbstractAppState{
     private Rapids rapids[];
 //    private FallingRock rocks[];
     private ArrayList<FallingRock> rocks;
+    private FallingRock rock;
     private FloatingLog logs[];
     public Random random;
     private int rockCount;
+    private boolean rockExists;
+    private float rockTimer;
 
     public static final float ROCKFALL_PROBABILITY = 0.005f;
     private static final int MAX_NUM_ROCKS = 100;
@@ -123,7 +126,9 @@ public class CanyonMode extends AbstractAppState{
     }
     
     public void initFallingRocks() {        
-        rockCount = 0;
+        rockExists = false;
+        rockTimer = 0;
+//        rockCount = 0;
         
 //        for(int i = 0; i < NUM_ROCKS; i++) {
 //            rocks[i] = new FallingRock(this, w);
@@ -131,8 +136,9 @@ public class CanyonMode extends AbstractAppState{
     }
     
     public void addRock(Vector3f raftPosition) {
-        if(rockCount < MAX_NUM_ROCKS) {
-            rockCount++;
+        if(!rockExists) {
+            rockExists = true;
+            rockTimer = 0;
             float x = random.nextFloat() * 2 - 1;
             float z = random.nextFloat() * 2 - 1;
             int scale = random.nextInt(90) + 10; // random scaling factor of between 10 and 90
@@ -145,8 +151,8 @@ public class CanyonMode extends AbstractAppState{
 
             Vector3f rockPosition = new Vector3f(x, raftPosition.y + 50f, z);
 
-            FallingRock rock = new FallingRock(this, w, rockPosition);
-            rocks.add(rock);
+            rock = new FallingRock(this, w, rockPosition);
+//            rocks.add(rock);
         }
         
     }
@@ -240,16 +246,33 @@ public class CanyonMode extends AbstractAppState{
         app.getListener().setRotation(raft.getRot());
 //        System.out.println(app.getListener().getLocation());
         
-        if(!rocks.isEmpty()) {
-            for(FallingRock r : rocks) {
-                if(r.getHasHitWater()) {
-                    Vector3f impact = r.getPosition();
-                    // TO DO: SPLASH
-                    // TO DO: SOUND
-                    r.remove();
-    //                rocks.remove(r);
-                }
-            }
+        rockTimer += tpf;
+        
+        if(rockExists && rockTimer > 10) {
+            rock.remove();
+            rockExists = false;
+            rockTimer = 0;
         }
+        
+        if(rockExists && rock.getHasHitWater()) {
+            Vector3f impact = rock.getPosition();
+            // TO DO splash
+            // TO DO sound
+            rock.remove();
+            rockExists = false;
+            rockTimer = 0;
+        }
+        
+//        if(!rocks.isEmpty()) {
+//            for(FallingRock r : rocks) {
+//                if(r.getHasHitWater()) {
+//                    Vector3f impact = r.getPosition();
+//                    // TO DO: SPLASH
+//                    // TO DO: SOUND
+//                    r.remove();
+//    //                rocks.remove(r);
+//                }
+//            }
+//        }
     }
 }

@@ -35,7 +35,7 @@ public class CanyonRunMode extends CanyonMode{
     private boolean gameOver;
     private boolean recovery;
     private boolean courseActive;
-    
+
     boolean counting = false;
     
     public CanyonRunMode(){
