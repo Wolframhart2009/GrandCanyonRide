@@ -13,6 +13,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.input.ChaseCamera;
 import com.jme3.input.InputManager;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
@@ -163,9 +164,10 @@ public class CanyonMode extends AbstractAppState{
        ChaseCamera chaseCam = new ChaseCamera(this.getCamera(), raft.getNode(), this.getInputManager());
        this.app.getInputManager().setCursorVisible(false);
        chaseCam.setSmoothMotion(true);
-       chaseCam.setTrailingEnabled(true);
-//       chaseCam.setLookAtOffset(new Vector3f(0,15,15));
-//       chaseCam.setDefaultDistance(10f);
+//       chaseCam.setTrailingEnabled(true);
+       chaseCam.setDefaultDistance(20f);
+       chaseCam.setLookAtOffset(new Vector3f(0,8,0));
+       chaseCam.setDefaultVerticalRotation(-FastMath.DEG_TO_RAD * 8);
 //       chaseCam.setDragToRotate(false);
    }
    
