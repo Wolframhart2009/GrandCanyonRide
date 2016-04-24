@@ -110,7 +110,7 @@ public class Raft {
         CompoundCollisionShape raftShape = new CompoundCollisionShape();
         BoxCollisionShape box = new BoxCollisionShape(new Vector3f(RAFT_WIDTH, RAFT_HEIGHT, RAFT_LENGTH));
         raftShape.addChildShape(box, new Vector3f(0, 0, 0));
-        raftVehicleControl = new VehicleControl(raftShape, 1000f);
+        raftVehicleControl = new VehicleControl(raftShape, 600f);
         nodeRaft.addControl(raftVehicleControl);
         
         float stiffness = 100.0f;//200=f1 car

@@ -122,6 +122,7 @@ public class World {
         msa.bullet.getPhysicsSpace().add(terrainPhys);
         terrainPhys.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
         terrainPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+        terrainPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_05); // rocks
     }
     
     public void addShadows(DirectionalLight light){

@@ -70,6 +70,8 @@ public class CanyonMode extends AbstractAppState{
 //        this.app.getFlyByCamera().setEnabled(true);
         this.app.getInputManager().setCursorVisible(false);
         
+        rocks = new ArrayList<FallingRock>();
+        
         initPhysics();
                 
         w = new World(this, "Scenes/Grand_Canyon.jpg", 4097);
@@ -120,8 +122,7 @@ public class CanyonMode extends AbstractAppState{
         
     }
     
-    public void initFallingRocks() {
-        rocks = new ArrayList<FallingRock>();
+    public void initFallingRocks() {        
         rockCount = 0;
         
 //        for(int i = 0; i < NUM_ROCKS; i++) {
@@ -239,13 +240,15 @@ public class CanyonMode extends AbstractAppState{
         app.getListener().setRotation(raft.getRot());
 //        System.out.println(app.getListener().getLocation());
         
-        for(FallingRock r : rocks) {
-            if(r.getHasHitWater()) {
-                Vector3f impact = r.getPosition();
-                // TO DO: SPLASH
-                // TO DO: SOUND
-                r.remove();
-//                rocks.remove(r);
+        if(!rocks.isEmpty()) {
+            for(FallingRock r : rocks) {
+                if(r.getHasHitWater()) {
+                    Vector3f impact = r.getPosition();
+                    // TO DO: SPLASH
+                    // TO DO: SOUND
+                    r.remove();
+    //                rocks.remove(r);
+                }
             }
         }
     }
