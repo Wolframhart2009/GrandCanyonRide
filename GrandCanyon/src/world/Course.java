@@ -98,14 +98,14 @@ public class Course {
         physStart = new CourseLineGhostControl((CanyonRunMode) msa, this, new BoxCollisionShape(geomStartBox.getLocalScale()));
         geomStartBox.addControl(physStart);
         msa.bullet.getPhysicsSpace().add(physStart);
-        physStart.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);
-        physStart.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+//        physStart.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);
+//        physStart.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
         
         physFinish = new CourseLineGhostControl((CanyonRunMode) msa, this, new BoxCollisionShape(geomFinishBox.getLocalScale()));
         geomFinishBox.addControl(physFinish);
         msa.bullet.getPhysicsSpace().add(physFinish);
-        physFinish.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);
-        physFinish.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+//        physFinish.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);
+//        physFinish.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
     }
     
     public void addPosition(Vector3f pos){

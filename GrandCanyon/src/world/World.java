@@ -120,9 +120,9 @@ public class World {
         RigidBodyControl terrainPhys = new RigidBodyControl(0f);
         physWorld.addControl(terrainPhys);
         msa.bullet.getPhysicsSpace().add(terrainPhys);
-        terrainPhys.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
-        terrainPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
-        terrainPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_05); // rocks
+//        terrainPhys.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
+//        terrainPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+//        terrainPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_05); // rocks
     }
     
     public void addShadows(DirectionalLight light){

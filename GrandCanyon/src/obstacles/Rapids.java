@@ -97,8 +97,8 @@ public class Rapids extends Node{
         GhostControl ghost = new vortexControl(phyShell);
         rapidGeom.addControl(ghost);
         sa.bullet.getPhysicsSpace().add(ghost);  
-        ghost.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
-        ghost.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+//        ghost.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
+//        ghost.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
     }
     
     private void initAudio(){

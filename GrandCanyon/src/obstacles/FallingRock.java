@@ -80,9 +80,9 @@ public class FallingRock {
         physRock.setRestitution(0.2f);
         msa.bullet.getPhysicsSpace().add(physRock);
         
-        physRock.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_05);
-        physRock.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01); // water, terrain
-        physRock.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03); // raft
+//        physRock.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_05);
+//        physRock.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01); // water, terrain
+//        physRock.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03); // raft
     }
     
     private void placeRock(World w) {

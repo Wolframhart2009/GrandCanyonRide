@@ -191,10 +191,10 @@ public class Raft {
         raftVehicleControl.setPhysicsRotation(q);
         raftVehicleControl.applyImpulse(Vector3f.UNIT_X, Vector3f.ZERO);
         
-        raftVehicleControl.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_03);
-        raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
-        raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
-        raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_04);
+//        raftVehicleControl.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_03);
+//        raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
+//        raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
+//        raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_04);
     }
     
     public Vector3f getPos(){

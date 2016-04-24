@@ -100,9 +100,9 @@ public class Water {
         waterPhys.setRestitution(0.0f);
         waterNode.addControl(waterPhys);
         msa.bullet.getPhysicsSpace().add(waterPhys);
-        waterPhys.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
-        waterPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
-        waterPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_05);
+//        waterPhys.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
+//        waterPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+//        waterPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_05);
     }
     
     private void initAudio(){
