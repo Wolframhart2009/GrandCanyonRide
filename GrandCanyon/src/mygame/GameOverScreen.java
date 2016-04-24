@@ -69,7 +69,7 @@ public class GameOverScreen extends AbstractAppState {
         text.setColor(ColorRGBA.Black);
         text.setSize(40f);
         text.setText("Game Over");
-        text.setLocalTranslation(DisplaySettings.screenX/2 - 60, DisplaySettings.screenY - 50, 0);
+        text.setLocalTranslation(DisplaySettings.screenX/2 - 90, DisplaySettings.screenY - 50, 0);
         text.move(0, 0, 1); //Move to foreground
         app.getGuiNode().attachChild(text);
         
@@ -79,7 +79,7 @@ public class GameOverScreen extends AbstractAppState {
             scoreText.setSize(40f);
             String str = String.format("Your score: %3.2f sec", score);
             scoreText.setText(str);
-            scoreText.setLocalTranslation(DisplaySettings.screenX/2 - 150, DisplaySettings.screenY - 150, 0);
+            scoreText.setLocalTranslation(DisplaySettings.screenX/2 - 175, DisplaySettings.screenY - 150, 0);
             scoreText.move(0, 0, 1); //Move to foreground
             app.getGuiNode().attachChild(scoreText);
         }
