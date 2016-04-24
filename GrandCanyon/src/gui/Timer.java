@@ -12,7 +12,7 @@ import com.jme3.scene.Node;
 import mygame.DisplaySettings;
 
 /**
- *
+ * NOT USED
  * @author Robyn
  */
 public class Timer extends Node {

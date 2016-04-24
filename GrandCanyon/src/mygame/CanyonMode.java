@@ -87,7 +87,7 @@ public class CanyonMode extends AbstractAppState{
         
         initChaseCam();
         
-//        initDebug();
+        initDebug();
    }
     
     private void initPhysics() {
@@ -193,7 +193,7 @@ public class CanyonMode extends AbstractAppState{
        ChaseCamera chaseCam = new ChaseCamera(this.getCamera(), raft.getNode(), this.getInputManager());
        chaseCam.setSmoothMotion(true);
        chaseCam.setTrailingEnabled(true);
-       chaseCam.setDefaultDistance(40f);
+       chaseCam.setDefaultDistance(30f);
        chaseCam.setLookAtOffset(new Vector3f(0,8,0));
        chaseCam.setChasingSensitivity(15f);
        chaseCam.setDefaultVerticalRotation(-FastMath.DEG_TO_RAD * 8);
@@ -201,8 +201,8 @@ public class CanyonMode extends AbstractAppState{
    }
    
    private void initDebug(){
-        this.app.getFlyByCamera().setEnabled(true);
-        this.app.getFlyByCamera().setMoveSpeed(50.0f);
+//        this.app.getFlyByCamera().setEnabled(true);
+//        this.app.getFlyByCamera().setMoveSpeed(50.0f);
         bullet.setDebugEnabled(true);
                 
 //        getCamera().setLocation(new Vector3f(5f, w.getWaterHeight() + 5f, 5f));
@@ -212,8 +212,8 @@ public class CanyonMode extends AbstractAppState{
 //        getCamera().lookAt(new Vector3f(-5,0.5f,10), Vector3f.UNIT_Y);
         
         // looks at start line
-        getCamera().setLocation(new Vector3f(-190f, w.getWaterHeight() + 20f, -100f));
-        getCamera().lookAt(new Vector3f(-190f, w.getWaterHeight(), -135f), Vector3f.UNIT_Y);
+//        getCamera().setLocation(new Vector3f(-190f, w.getWaterHeight() + 20f, -100f));
+//        getCamera().lookAt(new Vector3f(-190f, w.getWaterHeight(), -135f), Vector3f.UNIT_Y);
         
         // looks at original finish line
 //        getCamera().setLocation(new Vector3f(2090f, w.getWaterHeight() + 20f, 845f));
@@ -239,6 +239,14 @@ public class CanyonMode extends AbstractAppState{
         app.getListener().setRotation(raft.getRot());
 //        System.out.println(app.getListener().getLocation());
         
-
+        for(FallingRock r : rocks) {
+            if(r.getHasHitWater()) {
+                Vector3f impact = r.getPosition();
+                // TO DO: SPLASH
+                // TO DO: SOUND
+                r.remove();
+//                rocks.remove(r);
+            }
+        }
     }
 }

@@ -24,7 +24,7 @@ import mygame.CanyonRunMode;
 import world.World;
 
 public class Rapids extends Node{
-    public static final Box RapidMesh = new Box(4f, .25f, 4f);
+    public static final Box RapidMesh = new Box(8f, .25f, 8f);
     
     private CanyonMode sa;
     private CanyonRunMode saM;

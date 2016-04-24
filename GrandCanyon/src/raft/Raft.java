@@ -4,6 +4,7 @@
  */
 package raft;
 
+import com.jme3.asset.TextureKey;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -24,6 +25,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Cylinder;
+import com.jme3.texture.Texture;
 import mygame.CanyonMode;
 import world.World;
 
@@ -71,7 +73,9 @@ public class Raft {
 //        nodeRaft.setLocalTranslation(startPosition);
         
         matRaft = new Material(msa.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
-        matRaft.setTexture("DiffuseMap", msa.getAssetManager().loadTexture("Textures/log1.jpg"));
+        matRaft.setTexture("DiffuseMap", msa.getAssetManager().loadTexture("Textures/treebark2.jpg"));
+//        TextureKey tkey = new TextureKey("Textures/log1.jpg", false);
+//        tkey.setAnisotropy(4);
         
         Cylinder log = new Cylinder(32,32,1,10,true);
         
@@ -106,7 +110,7 @@ public class Raft {
         CompoundCollisionShape raftShape = new CompoundCollisionShape();
         BoxCollisionShape box = new BoxCollisionShape(new Vector3f(RAFT_WIDTH, RAFT_HEIGHT, RAFT_LENGTH));
         raftShape.addChildShape(box, new Vector3f(0, 0, 0));
-        raftVehicleControl = new VehicleControl(raftShape, 800f);
+        raftVehicleControl = new VehicleControl(raftShape, 1000f);
         nodeRaft.addControl(raftVehicleControl);
         
         float stiffness = 100.0f;//200=f1 car

@@ -34,7 +34,7 @@ public class DisplaySettings {
         this.sa = sa;
         
         initLights();
-        initCoordCross();
+//        initCoordCross();
     }
 
     public static void initDisplay(SimpleApplication s){
