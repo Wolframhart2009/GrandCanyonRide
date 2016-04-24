@@ -18,6 +18,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
+import java.util.ArrayList;
 import java.util.Random;
 import obstacles.FallingRock;
 import obstacles.FloatingLog;
@@ -42,10 +43,14 @@ public class CanyonMode extends AbstractAppState{
     Course course;
     
     private Rapids rapids[];
-    private FallingRock rocks[];
+//    private FallingRock rocks[];
+    private ArrayList<FallingRock> rocks;
     private FloatingLog logs[];
-     
-    private static final int NUM_ROCKS = 1;
+    public Random random;
+    private int rockCount;
+
+    public static final float ROCKFALL_PROBABILITY = 0.005f;
+    private static final int MAX_NUM_ROCKS = 100;
     private static final int NUM_LOGS = 1;
     private static final int NUM_RAPIDS = 16;
 
@@ -78,9 +83,11 @@ public class CanyonMode extends AbstractAppState{
 //        raft = new Raft(this, w, new Vector3f(0f, w.getWaterHeight() + 1f, 22f));
         raft = new Raft(this, w, new Vector3f(-190f, w.getWaterHeight() + 1f, -100f));
         
-//        initChaseCam();
+        random = new Random();
         
-        initDebug();
+        initChaseCam();
+        
+//        initDebug();
    }
     
     private void initPhysics() {
@@ -114,11 +121,33 @@ public class CanyonMode extends AbstractAppState{
     }
     
     public void initFallingRocks() {
-        rocks = new FallingRock[NUM_ROCKS];
+        rocks = new ArrayList<FallingRock>();
+        rockCount = 0;
         
-        for(int i = 0; i < NUM_ROCKS; i++) {
-            rocks[i] = new FallingRock(this, w);
+//        for(int i = 0; i < NUM_ROCKS; i++) {
+//            rocks[i] = new FallingRock(this, w);
+//        }
+    }
+    
+    public void addRock(Vector3f raftPosition) {
+        if(rockCount < MAX_NUM_ROCKS) {
+            rockCount++;
+            float x = random.nextFloat() * 2 - 1;
+            float z = random.nextFloat() * 2 - 1;
+            int scale = random.nextInt(90) + 10; // random scaling factor of between 10 and 90
+
+            x *= scale;
+            z *= scale;
+
+            x += raftPosition.x;
+            z += raftPosition.z;
+
+            Vector3f rockPosition = new Vector3f(x, raftPosition.y + 50f, z);
+
+            FallingRock rock = new FallingRock(this, w, rockPosition);
+            rocks.add(rock);
         }
+        
     }
     
     public void initRapids() {
@@ -164,7 +193,7 @@ public class CanyonMode extends AbstractAppState{
        ChaseCamera chaseCam = new ChaseCamera(this.getCamera(), raft.getNode(), this.getInputManager());
        chaseCam.setSmoothMotion(true);
        chaseCam.setTrailingEnabled(true);
-       chaseCam.setDefaultDistance(18f);
+       chaseCam.setDefaultDistance(40f);
        chaseCam.setLookAtOffset(new Vector3f(0,8,0));
        chaseCam.setChasingSensitivity(15f);
        chaseCam.setDefaultVerticalRotation(-FastMath.DEG_TO_RAD * 8);
@@ -183,16 +212,16 @@ public class CanyonMode extends AbstractAppState{
 //        getCamera().lookAt(new Vector3f(-5,0.5f,10), Vector3f.UNIT_Y);
         
         // looks at start line
-//        getCamera().setLocation(new Vector3f(-190f, w.getWaterHeight() + 20f, -100f));
-//        getCamera().lookAt(new Vector3f(-190f, w.getWaterHeight(), -135f), Vector3f.UNIT_Y);
+        getCamera().setLocation(new Vector3f(-190f, w.getWaterHeight() + 20f, -100f));
+        getCamera().lookAt(new Vector3f(-190f, w.getWaterHeight(), -135f), Vector3f.UNIT_Y);
         
         // looks at original finish line
 //        getCamera().setLocation(new Vector3f(2090f, w.getWaterHeight() + 20f, 845f));
 //        getCamera().lookAt(new Vector3f(2090f, w.getWaterHeight(), 820f), Vector3f.UNIT_Y);
         
         // looks at finish line
-        getCamera().setLocation(new Vector3f(660f, w.getWaterHeight() + 20f, -1066f));
-        getCamera().lookAt(new Vector3f(660f, w.getWaterHeight(), -1066f), Vector3f.UNIT_Y);
+//        getCamera().setLocation(new Vector3f(660f, w.getWaterHeight() + 20f, -1066f));
+//        getCamera().lookAt(new Vector3f(660f, w.getWaterHeight(), -1066f), Vector3f.UNIT_Y);
    }
     
    @Override
@@ -208,6 +237,8 @@ public class CanyonMode extends AbstractAppState{
     public void update(float tpf) {
         app.getListener().setLocation(raft.getPos());
         app.getListener().setRotation(raft.getRot());
-        System.out.println(app.getListener().getLocation());
+//        System.out.println(app.getListener().getLocation());
+        
+
     }
 }

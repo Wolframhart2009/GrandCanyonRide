@@ -20,6 +20,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import mygame.CanyonMode;
+import mygame.CanyonRunMode;
 
 /**
  *
@@ -94,13 +95,13 @@ public class Course {
     }
     
     private void initPhysics() {
-        physStart = new CourseLineGhostControl(msa, this, new BoxCollisionShape(geomStartBox.getLocalScale()));
+        physStart = new CourseLineGhostControl((CanyonRunMode) msa, this, new BoxCollisionShape(geomStartBox.getLocalScale()));
         geomStartBox.addControl(physStart);
         msa.bullet.getPhysicsSpace().add(physStart);
         physStart.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);
         physStart.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
         
-        physFinish = new CourseLineGhostControl(msa, this, new BoxCollisionShape(geomFinishBox.getLocalScale()));
+        physFinish = new CourseLineGhostControl((CanyonRunMode) msa, this, new BoxCollisionShape(geomFinishBox.getLocalScale()));
         geomFinishBox.addControl(physFinish);
         msa.bullet.getPhysicsSpace().add(physFinish);
         physFinish.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);

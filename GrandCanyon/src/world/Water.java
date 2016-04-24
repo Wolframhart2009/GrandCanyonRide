@@ -102,6 +102,7 @@ public class Water {
         msa.bullet.getPhysicsSpace().add(waterPhys);
         waterPhys.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
         waterPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+        waterPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_05);
     }
     
     private void initAudio(){

@@ -10,6 +10,8 @@ import com.jme3.app.state.AppStateManager;
 import com.jme3.audio.AudioNode;
 import com.jme3.bullet.BulletAppState;
 import gui.Bar;
+import gui.Timer;
+import java.util.Random;
 
 /**
  *
@@ -20,10 +22,14 @@ public class CanyonRunMode extends CanyonMode{
     private AudioNode damage2;
     private int hitpoints;
     private Bar hitpointsBar;
+    private Timer timerGUI;
+
     
     private float time;
+    private float timer, score;
     private boolean gameOver;
     private boolean recovery;
+    private boolean courseActive;
     
     boolean counting = false;
     
@@ -37,11 +43,14 @@ public class CanyonRunMode extends CanyonMode{
         super.initialize(stateManager, app);
         
         initHitBar();
+        initGUITimer();
         this.gameOver = false;
         
         this.initAudio();
         this.initCourse();
         this.initRapids();
+        this.initFallingRocks();
+        this.initFloatingLogs();
     }
     
     private void initAudio(){
@@ -86,12 +95,35 @@ public class CanyonRunMode extends CanyonMode{
         adjustHitPoints(hitpoints - 1);
     }
     
+    private void initGUITimer() {
+        System.out.println("initializing GUI timer");
+        courseActive = false;
+        timer = 0;
+        score = 0;
+        
+        timerGUI = new Timer(app, app.getGuiNode(), 
+                DisplaySettings.screenX/8 - 100, DisplaySettings.screenY/8 - 75, 
+                50, 256);
+//        timerGUI.setText(timer);
+        timerGUI.finish();
+    }
+    
     public void setRecovery(){
         this.recovery = true;
     }
     
     public boolean getRecovery(){
         return this.recovery;
+    }
+        
+    public void startTimer() {
+        timer = 0;
+        courseActive = true;
+    }
+    
+    public void stopTimer() {
+        courseActive = false;
+        score = timer;
     }
     
     @Override
@@ -102,6 +134,18 @@ public class CanyonRunMode extends CanyonMode{
     @Override
     public void update(float tpf) {
         super.update(tpf);
+        
+        if(courseActive) {
+            timer += tpf;
+//            System.out.println("Elapsed time: " + timer);
+            timerGUI.setText(timer);
+            
+            float randomFloat = random.nextFloat();
+            if(randomFloat < ROCKFALL_PROBABILITY) {
+                this.addRock(raft.getPos());
+            }
+        }
+        
         if(!(tpf > 1.0)){
            time+= tpf;
         }

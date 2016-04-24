@@ -11,6 +11,7 @@ import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.GhostControl;
 import mygame.CanyonMode;
+import mygame.CanyonRunMode;
 
 /**
  *
@@ -18,12 +19,12 @@ import mygame.CanyonMode;
  */
 public class CourseLineGhostControl extends GhostControl implements PhysicsCollisionListener, PhysicsTickListener {
 
-    private CanyonMode msa;
+    private CanyonRunMode msa;
     private Course course;
     private String objAName, objBName;
     private PhysicsCollisionEvent event;
     
-    public CourseLineGhostControl(CanyonMode m, Course course, BoxCollisionShape b) {
+    public CourseLineGhostControl(CanyonRunMode m, Course course, BoxCollisionShape b) {
         super(b);
         msa = m;
         this.course = course;
@@ -53,12 +54,24 @@ public class CourseLineGhostControl extends GhostControl implements PhysicsColli
             space.removeCollisionListener(this);
             space.removeTickListener(this);
             course.hideLine(objBName);
+            
+            if(objBName.equals("line start")) {
+                msa.startTimer();
+            } else if (objBName.equals("line finish")) {
+                msa.stopTimer();
+            }
         }
-        else if(objAName.equals("line") && objBName.equals("Raft")){
+        else if(objAName.startsWith("line") && objBName.equals("Raft")){
             System.out.println("Removing collision listener");
             space.removeCollisionListener(this);
             space.removeTickListener(this);
             course.hideLine(objAName);
+            
+            if(objAName.equals("line start")) {
+                msa.startTimer();
+            } else if (objAName.equals("line finish")) {
+                msa.stopTimer();
+            }
         }
     }
 
