@@ -39,7 +39,7 @@ public class Timer extends Node {
         text = new BitmapText(font);
         text.setColor(ColorRGBA.White);
         text.setSize(40f);
-        text.setText("Time: 0.00 sec");
+        text.setText("0.0");
         float margin = (text.getLineHeight() / 2);
         float lineX = DisplaySettings.screenX/2 + margin;
         float lineY = DisplaySettings.screenY/2 + margin;
