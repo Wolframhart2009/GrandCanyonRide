@@ -42,7 +42,9 @@ public class Raft {
     private final float accelerationForce = 5000.0f;
     private float steeringValue;
     private float accelerationValue;
+    private Vector3f flipForce;
     private float speed;
+    private boolean isUpsideDown;
     
     private static final int NUM_LOGS_IN_RAFT = 5;
     private static final float RAFT_LENGTH = 5;
@@ -50,11 +52,12 @@ public class Raft {
     private static final float RAFT_HEIGHT = 1;
     private static final float MAX_SPEED = 0;
     
-    public Raft(CanyonMode m, World w) {
+    public Raft(CanyonMode m, World w, Vector3f startPosition) {
         msa = m;
-        startPosition = new Vector3f(0f, w.getWaterHeight() + 1f, 20f);
+        this.startPosition = startPosition;
         steeringValue = 0;
         accelerationValue = 0;
+        flipForce = new Vector3f(0, 6000, 0);
         
         initRaft();
         initKeys();
@@ -90,7 +93,8 @@ public class Raft {
         msa.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_J));
         msa.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_L));
         msa.getInputManager().addMapping("Pos", new KeyTrigger(KeyInput.KEY_P));
-        msa.getInputManager().addListener(actionListener, new String[]{"Forward", "Back", "Left", "Right", "Pos"});
+        msa.getInputManager().addMapping("Flip", new KeyTrigger(KeyInput.KEY_F));
+        msa.getInputManager().addListener(actionListener, new String[]{"Forward", "Back", "Left", "Right", "Pos", "Flip"});
 //        msa.getInputManager().addListener(analogListener, new String[]{"Forward", "Back"});
     }
     
@@ -178,6 +182,10 @@ public class Raft {
         
         msa.bullet.getPhysicsSpace().add(raftVehicleControl);
         raftVehicleControl.setPhysicsLocation(startPosition);
+        Quaternion q = new Quaternion();
+        q.fromAngleAxis(FastMath.PI, Vector3f.UNIT_Y);
+        raftVehicleControl.setPhysicsRotation(q);
+        raftVehicleControl.applyImpulse(Vector3f.UNIT_X, Vector3f.ZERO);
         
         raftVehicleControl.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_03);
         raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
@@ -226,6 +234,10 @@ public class Raft {
                 speed = raftVehicleControl.getCurrentVehicleSpeedKmHour();
 //                System.out.println("current speed = " + speed);
                 raftVehicleControl.accelerate(accelerationValue);
+            } else if (binding.equals("Flip")) {
+                if (isPressed) {
+                    raftVehicleControl.applyImpulse(flipForce, new Vector3f(1,0,0));
+                }
             } else if (binding.equals("Pos")) {
                 if (isPressed) {
 //                    System.out.println(nodeRaft.getLocalTranslation());

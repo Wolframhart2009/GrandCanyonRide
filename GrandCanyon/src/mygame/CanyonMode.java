@@ -75,7 +75,8 @@ public class CanyonMode extends AbstractAppState{
         s = new Sky(this, "Textures/Sky/Bright/BrightSky.dds", false, aps.getMainLight());
         water = new Water(this, w,  aps.getMainLight());
         w.attachWater(water);
-        raft = new Raft(this, w);
+//        raft = new Raft(this, w, new Vector3f(0f, w.getWaterHeight() + 1f, 22f));
+        raft = new Raft(this, w, new Vector3f(-190f, w.getWaterHeight() + 1f, -100f));
         
         initChaseCam();
         
@@ -160,13 +161,12 @@ public class CanyonMode extends AbstractAppState{
    
    private void initChaseCam() {
        this.app.getFlyByCamera().setEnabled(false);
-//       this.app.getInputManager().setCursorVisible(false);
        ChaseCamera chaseCam = new ChaseCamera(this.getCamera(), raft.getNode(), this.getInputManager());
-       this.app.getInputManager().setCursorVisible(false);
        chaseCam.setSmoothMotion(true);
-//       chaseCam.setTrailingEnabled(true);
-       chaseCam.setDefaultDistance(20f);
+       chaseCam.setTrailingEnabled(true);
+       chaseCam.setDefaultDistance(18f);
        chaseCam.setLookAtOffset(new Vector3f(0,8,0));
+       chaseCam.setChasingSensitivity(15f);
        chaseCam.setDefaultVerticalRotation(-FastMath.DEG_TO_RAD * 8);
 //       chaseCam.setDragToRotate(false);
    }
@@ -207,6 +207,4 @@ public class CanyonMode extends AbstractAppState{
         app.getListener().setRotation(raft.getRot());
         System.out.println(app.getListener().getLocation());
     }
-   
-   
 }
