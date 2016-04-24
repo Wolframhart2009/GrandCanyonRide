@@ -17,6 +17,7 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
@@ -88,7 +89,8 @@ public class Raft {
         msa.getInputManager().addMapping("Back", new KeyTrigger(KeyInput.KEY_K));
         msa.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_J));
         msa.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_L));
-        msa.getInputManager().addListener(actionListener, new String[]{"Forward", "Back", "Left", "Right"});
+        msa.getInputManager().addMapping("Pos", new KeyTrigger(KeyInput.KEY_P));
+        msa.getInputManager().addListener(actionListener, new String[]{"Forward", "Back", "Left", "Right", "Pos"});
 //        msa.getInputManager().addListener(analogListener, new String[]{"Forward", "Back"});
     }
     
@@ -182,6 +184,14 @@ public class Raft {
         raftVehicleControl.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01);
     }
     
+    public Vector3f getPos(){
+        return nodeRaft.getLocalTranslation();
+    }
+    
+    public Quaternion getRot(){
+        return nodeRaft.getLocalRotation();
+    }
+    
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String binding, boolean isPressed, float tpf) {
             if (binding.equals("Left")) {
@@ -205,7 +215,7 @@ public class Raft {
                     accelerationValue -= accelerationForce;
                 }
                 speed = raftVehicleControl.getCurrentVehicleSpeedKmHour();
-                System.out.println("current speed = " + speed);
+//                System.out.println("current speed = " + speed);
                 raftVehicleControl.accelerate(accelerationValue);
             } else if (binding.equals("Back")) {
                 if (isPressed) {
@@ -214,22 +224,14 @@ public class Raft {
                     accelerationValue += accelerationForce;
                 }
                 speed = raftVehicleControl.getCurrentVehicleSpeedKmHour();
-                System.out.println("current speed = " + speed);
+//                System.out.println("current speed = " + speed);
                 raftVehicleControl.accelerate(accelerationValue);
+            } else if (binding.equals("Pos")) {
+                if (isPressed) {
+//                    System.out.println(nodeRaft.getLocalTranslation());
+                }
             }
         }
     };
-    
-//    private AnalogListener analogListener = new AnalogListener() {
-//        public void onAnalog(String name, float value, float tpf) {
-//            if(name.equals("Forward")) {
-//                accelerationValue += accelerationForce * tpf;
-//            } else if(name.equals("Back")) {
-//                accelerationValue -= accelerationForce * tpf;
-//            }
-//            speed = raftVehicleControl.getCurrentVehicleSpeedKmHour();
-//            System.out.println("current speed = " + speed);
-//            raftVehicleControl.accelerate(accelerationValue);
-//        }
-//    };
+
 }

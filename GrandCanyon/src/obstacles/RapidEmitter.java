@@ -43,10 +43,10 @@ public class RapidEmitter extends ParticleEmitter{
         this.setEndColor( new ColorRGBA(0f, 0f, 1f, 1f));   // Blue to
         this.setStartColor(new ColorRGBA(1f, 1f, 1f, 0.5f)); // White
         
-        this.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 3,0));
+        this.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 6,0));
         
-        this.setStartSize(1.5f);
-        this.setEndSize(0.1f);
+        this.setStartSize(2.5f);
+        this.setEndSize(.5f);
         this.setGravity(0,1,0);
         
         this.setParticlesPerSec(5.0f);

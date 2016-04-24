@@ -1,6 +1,7 @@
 package obstacles;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
@@ -34,6 +35,7 @@ public class Rapids extends Node{
     private Material rapidMat;
     private RapidEmitter[] emit = new RapidEmitter[4];
             
+    private AudioNode rapidSound;
     
     public Rapids(CanyonMode s, World w, Vector3f location){
         this.sa = s;
@@ -95,6 +97,18 @@ public class Rapids extends Node{
         sa.bullet.getPhysicsSpace().add(ghost);  
         ghost.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
         ghost.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+    }
+    
+    private void initAudio(){
+        rapidSound = new AudioNode(sa.getAssetManager(), "Sound/Rapids/Rapidsound.wav", false);
+        rapidSound.setLooping(true);
+        rapidSound.setReverbEnabled(false);
+        rapidSound.setPositional(true);
+        rapidSound.setVolume(1.20f);
+        rapidSound.setRefDistance(10.0f);
+        this.attachChild(rapidSound);
+        rapidSound.setLocalTranslation(0, 0, 0);
+        rapidSound.play();
     }
     
     class vortexControl extends GhostControl implements PhysicsCollisionListener{

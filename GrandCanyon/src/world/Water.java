@@ -5,6 +5,7 @@
 package world;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -43,6 +44,7 @@ import mygame.Main;
 public class Water {
     
     public Spatial waterNode;
+    private AudioNode waterAudio;
     private WaterFilter watFilter;
     private RigidBodyControl waterPhys;
     
@@ -60,6 +62,7 @@ public class Water {
         addWaterCollision(w);
         initPhysics();
         waterNode.addControl(new WaterControl());
+        initAudio();
     }
     
     private void initWater(){
@@ -99,6 +102,15 @@ public class Water {
         msa.bullet.getPhysicsSpace().add(waterPhys);
         waterPhys.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_01);
         waterPhys.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+    }
+    
+    private void initAudio(){
+        waterAudio = new AudioNode(msa.getAssetManager(), "Sound/Water/Water_Lapping_Boat.wav");
+        waterAudio.setLooping(true);
+        waterAudio.setPositional(false);
+        waterAudio.setVolume(.90f);
+        msa.getRootNode().attachChild(waterAudio);
+        waterAudio.playInstance();
     }
     
     public void updateWaterHeight(){

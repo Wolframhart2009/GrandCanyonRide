@@ -16,6 +16,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
+import java.util.Random;
 import obstacles.FallingRock;
 import obstacles.FloatingLog;
 import obstacles.Rapids;
@@ -44,7 +45,7 @@ public class CanyonMode extends AbstractAppState{
      
     private static final int NUM_ROCKS = 1;
     private static final int NUM_LOGS = 1;
-    private static final int NUM_RAPIDS = 1;
+    private static final int NUM_RAPIDS = 16;
 
     boolean addedRapid = false;
     
@@ -83,7 +84,28 @@ public class CanyonMode extends AbstractAppState{
     }
     
     public void initCourse() {
-        course = new Course(this, w);
+        course = new Course(this, w, NUM_RAPIDS);
+        Vector3f course1Locs[] = new Vector3f[NUM_RAPIDS];
+        
+        course1Locs[0] = new Vector3f(-164, w.getWaterHeight(), -75);
+        course1Locs[1] = new Vector3f(-185, w.getWaterHeight(), -140);
+        course1Locs[2] = new Vector3f(130, w.getWaterHeight(), -360);
+        course1Locs[3] = new Vector3f(158, w.getWaterHeight(), 404);
+        course1Locs[4] = new Vector3f(275, w.getWaterHeight(), 762);
+        course1Locs[5] = new Vector3f(727, w.getWaterHeight(), -1332);
+        course1Locs[6] = new Vector3f(561, w.getWaterHeight(), -957);
+        course1Locs[7] = new Vector3f(542, w.getWaterHeight(), -827);
+        course1Locs[8] = new Vector3f(541, w.getWaterHeight(), -717);
+        course1Locs[9] = new Vector3f(425, w.getWaterHeight(), -586);
+        course1Locs[10] = new Vector3f(355, w.getWaterHeight(), -531);
+        course1Locs[11] = new Vector3f(250, w.getWaterHeight(), -680);
+        course1Locs[12] = new Vector3f(36, w.getWaterHeight(), -568);
+        course1Locs[13] = new Vector3f(60, w.getWaterHeight(), -416);
+        course1Locs[14] = new Vector3f(91, w.getWaterHeight(), -213);
+        course1Locs[15] = new Vector3f(-36, w.getWaterHeight(), -280);
+        
+        course.addPositions(course1Locs);
+        
     }
     
     public void initFallingRocks() {
@@ -97,13 +119,8 @@ public class CanyonMode extends AbstractAppState{
     public void initRapids() {
         rapids = new Rapids[NUM_RAPIDS];
         
-        for(int i = 0; i < NUM_RAPIDS; i++) {
-            float yPos = w.getWaterHeight();
-            float xPos = 0;
-            float zPos = 20;
-            
-            Vector3f pos = new Vector3f(xPos, yPos, zPos); 
-            
+        for(int i = 0; i < NUM_RAPIDS; i++) {  
+            Vector3f pos = course.getNextPos();
             rapids[i] = new Rapids(this, w, pos);
         }
     }
@@ -165,4 +182,13 @@ public class CanyonMode extends AbstractAppState{
         app.getGuiNode().detachAllChildren();
         app.getRootNode().detachAllChildren();
     }
+
+    @Override
+    public void update(float tpf) {
+        app.getListener().setLocation(raft.getPos());
+        app.getListener().setRotation(raft.getRot());
+        System.out.println(app.getListener().getLocation());
+    }
+   
+   
 }

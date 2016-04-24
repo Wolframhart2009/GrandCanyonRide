@@ -7,6 +7,7 @@ package gui;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.asset.AssetManager;
+import com.jme3.audio.AudioNode;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.input.MouseInput;
@@ -39,6 +40,8 @@ public class Button extends Node implements AnalogListener{
     private Picture idle;
     private Picture active;
     private boolean clicked, inside;
+    
+    private AudioNode click;
     
     AbstractAppState oldState;
     AbstractAppState newState;
@@ -81,6 +84,14 @@ public class Button extends Node implements AnalogListener{
         this.text.setLocalTranslation(width/8, height, 0);
     }
     
+    public void addClickSound(Node parent, String path){
+        click = new AudioNode(sa.getAssetManager(), "Sound/Button/buttonclick.wav", false);
+        click.setLooping(false);
+        click.setPositional(false);
+        click.setVolume(3.0f);
+        parent.attachChild(click);
+    }
+    
     public void addClickTransition(AbstractAppState oldState, AbstractAppState newState){
         this.oldState = oldState;
         this.newState = newState;
@@ -108,6 +119,9 @@ public class Button extends Node implements AnalogListener{
     public void onAnalog(String name, float value, float tpf) {
         if(name.equals("clicked") && inside){
             clicked = true;
+            if(click != null){
+                click.playInstance();
+            }
             if(oldState != null && newState != null){
                 sa.getStateManager().detach(oldState);
                 sa.getStateManager().attach(newState);
