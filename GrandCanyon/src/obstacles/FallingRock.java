@@ -130,10 +130,10 @@ public class FallingRock {
                     saM.decHitPoints();
                 }           
             } else if(objAName.equals("rock") && objBName.equals("Water_Collide_box")) {
-                System.out.println("rock water collision!");
+//                System.out.println("rock water collision!");
                 hasHitWater = true;
             } else if(objAName.equals("Water_Collide_box") && objBName.equals("rock")) {
-                System.out.println("rock water collision!");
+//                System.out.println("rock water collision!");
                 hasHitWater = true;
             }
         }

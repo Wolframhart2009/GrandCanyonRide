@@ -87,7 +87,7 @@ public class CanyonMode extends AbstractAppState{
         
         random = new Random();
         
-        initChaseCam();
+//        initChaseCam();
         
         initDebug();
    }
@@ -202,8 +202,8 @@ public class CanyonMode extends AbstractAppState{
    }
    
    private void initDebug(){
-//        this.app.getFlyByCamera().setEnabled(true);
-//        this.app.getFlyByCamera().setMoveSpeed(50.0f);
+        this.app.getFlyByCamera().setEnabled(true);
+        this.app.getFlyByCamera().setMoveSpeed(50.0f);
         bullet.setDebugEnabled(true);
                 
 //        getCamera().setLocation(new Vector3f(5f, w.getWaterHeight() + 5f, 5f));
@@ -213,8 +213,8 @@ public class CanyonMode extends AbstractAppState{
 //        getCamera().lookAt(new Vector3f(-5,0.5f,10), Vector3f.UNIT_Y);
         
         // looks at start line
-//        getCamera().setLocation(new Vector3f(-190f, w.getWaterHeight() + 20f, -100f));
-//        getCamera().lookAt(new Vector3f(-190f, w.getWaterHeight(), -135f), Vector3f.UNIT_Y);
+        getCamera().setLocation(new Vector3f(-190f, w.getWaterHeight() + 20f, -100f));
+        getCamera().lookAt(new Vector3f(-190f, w.getWaterHeight(), -135f), Vector3f.UNIT_Y);
         
         // looks at original finish line
 //        getCamera().setLocation(new Vector3f(2090f, w.getWaterHeight() + 20f, 845f));

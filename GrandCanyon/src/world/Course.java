@@ -4,6 +4,10 @@
  */
 package world;
 
+import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.PhysicsTickListener;
+import com.jme3.bullet.collision.PhysicsCollisionEvent;
+import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.GhostControl;
@@ -32,6 +36,8 @@ public class Course {
     private Node nodeStart, nodeFinish;
     private Geometry geomStartBox, geomFinishBox;
     private GhostControl physStart, physFinish;
+    private StartLine startLine;
+    private FinishLine finishLine;
     
     private Vector3f positions[];
     private int posCounter;
@@ -51,7 +57,6 @@ public class Course {
         posTraversal = 0;
         
         initCourse();
-        initPhysics();
     }
     
     private void initCourse() {
@@ -59,53 +64,8 @@ public class Course {
         mat = new Material(msa.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
         mat.setTexture("DiffuseMap", msa.getAssetManager().loadTexture("Textures/checkeredflag1.jpg"));
         
-        Box b = new Box(1,1,1);        
-        
-        // place starting line
-        nodeStart = new Node();
-        nodeStart.setLocalTranslation(startPos);
-        geomStartBox = new Geometry("line start", b);
-        geomStartBox.scale(60,5,1);
-        geomStartBox.setMaterial(mat);
-//        geomStartBox.setCullHint(Spatial.CullHint.Always);
-        
-        Quaternion rot = new Quaternion();
-        rot.fromAngleAxis(-1 * FastMath.PI / 16, Vector3f.UNIT_Y);
-        nodeStart.setLocalRotation(rot);
-        
-        nodeStart.attachChild(geomStartBox);
-        msa.getRootNode().attachChild(nodeStart);
-        
-        // place finish line
-        nodeFinish = new Node();
-        nodeFinish.setLocalTranslation(finishPos);
-        geomFinishBox = new Geometry("line finish", b);
-//        geomFinishBox.scale(70,5,1); // original finish line dimensions
-        geomFinishBox.scale(60,5,1);
-        geomFinishBox.setMaterial(mat);
-//        geomFinishBox.setCullHint(Spatial.CullHint.Always);
-        
-        rot = new Quaternion();
-        rot.fromAngleAxis(-1 * FastMath.PI / 4, Vector3f.UNIT_Y);
-        nodeFinish.setLocalRotation(rot);
-        geomFinishBox.setMaterial(mat);
-        
-        nodeFinish.attachChild(geomFinishBox);
-        msa.getRootNode().attachChild(nodeFinish);
-    }
-    
-    private void initPhysics() {
-        physStart = new CourseLineGhostControl((CanyonRunMode) msa, this, new BoxCollisionShape(geomStartBox.getLocalScale()));
-        geomStartBox.addControl(physStart);
-        msa.bullet.getPhysicsSpace().add(physStart);
-//        physStart.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);
-//        physStart.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
-        
-        physFinish = new CourseLineGhostControl((CanyonRunMode) msa, this, new BoxCollisionShape(geomFinishBox.getLocalScale()));
-        geomFinishBox.addControl(physFinish);
-        msa.bullet.getPhysicsSpace().add(physFinish);
-//        physFinish.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_04);
-//        physFinish.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03);
+        startLine = new StartLine(msa, startPos, mat);
+        finishLine = new FinishLine(msa, finishPos, mat);
     }
     
     public void addPosition(Vector3f pos){
@@ -123,15 +83,5 @@ public class Course {
        Vector3f ret = positions[posTraversal];
        posTraversal++;
        return ret;
-    }
-    
-    public void hideLine(String lineName) {
-        if(lineName.equals("line start")) {
-            msa.bullet.getPhysicsSpace().remove(physStart);
-            geomStartBox.setCullHint(Spatial.CullHint.Always);
-        } else if(lineName.equals("line finish")) {
-            msa.bullet.getPhysicsSpace().remove(physFinish);
-            geomFinishBox.setCullHint(Spatial.CullHint.Always);
-        }
-    }
+    }    
 }
