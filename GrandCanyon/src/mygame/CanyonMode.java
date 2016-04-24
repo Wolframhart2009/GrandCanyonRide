@@ -11,6 +11,7 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.input.ChaseCamera;
 import com.jme3.input.InputManager;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -60,7 +61,7 @@ public class CanyonMode extends AbstractAppState{
         this.app = (Main) app;
         this.asm = stateManager;
         
-        this.app.getFlyByCamera().setEnabled(true);
+//        this.app.getFlyByCamera().setEnabled(true);
         this.app.getInputManager().setCursorVisible(false);
         
         initPhysics();
@@ -75,7 +76,9 @@ public class CanyonMode extends AbstractAppState{
         w.attachWater(water);
         raft = new Raft(this, w);
         
-        initDebug();
+        initChaseCam();
+        
+//        initDebug();
    }
     
     private void initPhysics() {
@@ -154,12 +157,25 @@ public class CanyonMode extends AbstractAppState{
        return app.getCamera();
    }
    
+   private void initChaseCam() {
+       this.app.getFlyByCamera().setEnabled(false);
+//       this.app.getInputManager().setCursorVisible(false);
+       ChaseCamera chaseCam = new ChaseCamera(this.getCamera(), raft.getNode(), this.getInputManager());
+       this.app.getInputManager().setCursorVisible(false);
+       chaseCam.setSmoothMotion(true);
+       chaseCam.setTrailingEnabled(true);
+//       chaseCam.setLookAtOffset(new Vector3f(0,15,15));
+//       chaseCam.setDefaultDistance(10f);
+//       chaseCam.setDragToRotate(false);
+   }
+   
    private void initDebug(){
-        this.app.getFlyByCamera().setMoveSpeed(50.0f);
+//        this.app.getFlyByCamera().setEnabled(true);
+//        this.app.getFlyByCamera().setMoveSpeed(50.0f);
         bullet.setDebugEnabled(true);
                 
-        getCamera().setLocation(new Vector3f(5f, w.getWaterHeight() + 5f, 5f));
-        getCamera().lookAt(new Vector3f(0f, w.getWaterHeight() + 1f, 20f), Vector3f.UNIT_Y);
+//        getCamera().setLocation(new Vector3f(5f, w.getWaterHeight() + 5f, 5f));
+//        getCamera().lookAt(new Vector3f(0f, w.getWaterHeight() + 1f, 20f), Vector3f.UNIT_Y);
         
 //        getCamera().setLocation(new Vector3f(0,10,15));
 //        getCamera().lookAt(new Vector3f(-5,0.5f,10), Vector3f.UNIT_Y);

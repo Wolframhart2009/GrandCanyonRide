@@ -136,7 +136,7 @@ public class Raft {
         wheelPosition = new Vector3f(-xOff, yOff, zOff);
         node1.attachChild(wheel1);
         raftVehicleControl.addWheel(node1, wheelPosition, wheelDirection, 
-                wheelAxle, restLength, radius, false);
+                wheelAxle, restLength, radius, true);
 
         Node node2 = new Node("wheel 2 node");
         Geometry wheel2 = new Geometry("wheel 2", wheelMesh);
@@ -145,7 +145,7 @@ public class Raft {
         wheelPosition = new Vector3f(xOff, yOff, zOff);
         node2.attachChild(wheel2);
         raftVehicleControl.addWheel(node2, wheelPosition, wheelDirection, 
-                wheelAxle, restLength, radius, false);
+                wheelAxle, restLength, radius, true);
 
         Node node3 = new Node("wheel 3 node");
         Geometry wheel3 = new Geometry("wheel 3", wheelMesh);
@@ -154,7 +154,7 @@ public class Raft {
         wheelPosition = new Vector3f(-xOff, yOff, -zOff);
         node3.attachChild(wheel3);
         raftVehicleControl.addWheel(node3, wheelPosition, wheelDirection, 
-                wheelAxle, restLength, radius, true);
+                wheelAxle, restLength, radius, false);
 
         Node node4 = new Node("wheel 4 node");
         Geometry wheel4 = new Geometry("wheel 4", wheelMesh);
@@ -163,7 +163,7 @@ public class Raft {
         wheelPosition = new Vector3f(xOff, yOff, -zOff);
         node4.attachChild(wheel4);
         raftVehicleControl.addWheel(node4, wheelPosition, wheelDirection, 
-                wheelAxle, restLength, radius, true);
+                wheelAxle, restLength, radius, false);
 
         nodeRaft.attachChild(node1);
         nodeRaft.attachChild(node2);
@@ -234,4 +234,7 @@ public class Raft {
         }
     };
 
+    public Node getNode() {
+        return nodeRaft;
+    } 
 }
