@@ -45,10 +45,12 @@ public class Rapids extends Node{
         initGeom();
         initEmitters();
         initPhysics();
-//        if(location != null){
-//            this.setLocalTranslation(location);
-//            System.out.println("Rapid added at location " + location );
-//        }
+        initAudio();
+        
+        if(location != null){
+            this.setLocalTranslation(location);
+            System.out.println("(Rapid added at location " + location );
+        }
         
         if(sa instanceof CanyonRunMode){
             runMode = true;
