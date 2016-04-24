@@ -24,7 +24,7 @@ import mygame.CanyonRunMode;
 import world.World;
 
 public class Rapids extends Node{
-    public static final Box RapidMesh = new Box(8f, .25f, 8f);
+    public static final Box RapidMesh = new Box(4f, 2f, 4f);
     
     private CanyonMode sa;
     private CanyonRunMode saM;
@@ -123,17 +123,16 @@ public class Rapids extends Node{
         public void collision(PhysicsCollisionEvent event) {
            String objAName = event.getNodeA().getName();
            String objBName = event.getNodeB().getName();
-//           System.out.println(objAName);
-//           System.out.println(objBName);
    
            if(objAName.equals("Raft") && objBName.equals("Rapids")){
-               
+               System.out.println("rapid collision");
                if(runMode && !saM.getRecovery()){
                    saM.setRecovery();
                    saM.decHitPoints();
                }
            }
            else if(objAName.equals("Rapids") && objBName.equals("Raft")){
+               System.out.println("rapid collision");
                if(runMode && !saM.getRecovery()){
                    saM.setRecovery();
                    saM.decHitPoints();
