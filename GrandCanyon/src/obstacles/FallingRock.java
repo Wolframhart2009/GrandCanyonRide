@@ -4,6 +4,7 @@
  */
 package obstacles;
 
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.collision.PhysicsCollisionEvent;
 import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.bullet.collision.PhysicsCollisionObject;
@@ -36,6 +37,7 @@ public class FallingRock {
     private Vector3f position;
     private boolean runMode;
     private boolean hasHitWater;
+    private AudioNode splash;
     
     public FallingRock(CanyonMode m, World w, Vector3f position) {
         msa = m;
@@ -50,6 +52,7 @@ public class FallingRock {
         initRock();
         initPhysics();
         placeRock(w);
+        initAudio();
     }
     
     private void initMaterial() {
@@ -83,6 +86,14 @@ public class FallingRock {
 //        physRock.setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_05);
 //        physRock.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_01); // water, terrain
 //        physRock.setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_03); // raft
+    }
+    
+    private void initAudio(){
+        splash = new AudioNode(msa.getAssetManager(), "Sound/Rock/splash.wav", false);
+        splash.setLooping(false);
+        splash.setPositional(false);
+        splash.setVolume(4.0f);
+        msa.getRootNode().attachChild(splash); 
     }
     
     private void placeRock(World w) {
@@ -132,9 +143,13 @@ public class FallingRock {
             } else if(objAName.equals("rock") && objBName.equals("Water_Collide_box")) {
 //                System.out.println("rock water collision!");
                 hasHitWater = true;
+                splash.playInstance();
+                RockSplashEmitter splash = new RockSplashEmitter(msa, msa.getRootNode(), getPosition());
             } else if(objAName.equals("Water_Collide_box") && objBName.equals("rock")) {
 //                System.out.println("rock water collision!");
                 hasHitWater = true;
+                splash.playInstance();
+                RockSplashEmitter splash = new RockSplashEmitter(msa, msa.getRootNode(), getPosition());
             }
         }
     }
